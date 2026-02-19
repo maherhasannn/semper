@@ -2,7 +2,7 @@
 <html data-wf-page="68e2b5037ce335565e421325" data-wf-site="68e2b5017ce335565e4212dc" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Semperr | Stop Hiring. Start Automating</title>
+  <title>Semperr | The Team That Scales with You</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
@@ -59,7 +59,7 @@
             </div>
             <div class="nav-bottom-div">
               <!-- <div class="nav-info-div"><img src="images/Semper.png" loading="lazy" alt="" class="logo-icon"> -->
-                <div class="small-paragraph nav-bottom-text">Semperr | Stop Hiring. Start Automating.</div>
+                <div class="small-paragraph nav-bottom-text">Semperr | The Team That Scales with You.</div>
               </div>
               <div class="social-media-link-div">
                 <a href="https://www.linkedin.com/" target="_blank" class="paragraph social-media-link">LinkedIn</a>
@@ -85,7 +85,7 @@
     <div class="w-layout-blockcontainer container w-container">
       <div class="home-hero-detail-div">
         <div data-w-id="8a7d2715-f71e-6ddb-675c-5c8a035502e4" style="opacity:0" class="sub-heading white-text">Request Your Free 15-Minute ROI Assessment</div>
-        <h1 data-w-id="a64735a7-94b6-2f0b-c87b-b451d3f1489f" style="opacity:0" class="h1-heading home-hero-heading">Stop Hiring. Start Automating</h1>
+        <h1 data-w-id="a64735a7-94b6-2f0b-c87b-b451d3f1489f" style="opacity:0" class="h1-heading home-hero-heading">The Team That Scales with You</h1>
         <p data-w-id="f94f2201-90bc-4797-23b8-7871c1ad0764" style="opacity:0" class="large-paragraph home-hero-paragraph">We Implement AI Systems That Cut Your Back-Office Overhead by 30% or More.</p>
       </div>
     </div>
@@ -182,33 +182,326 @@
       </div>
     </div>
   </section>
-  <section class="section bg-blue position-relative">
+  <section class="section cta-section" id="cta-section">
+    <style>
+      .cta-section {
+        background: linear-gradient(135deg, #1c26e6 0%, #1a24b9 50%, #0f1466 100%);
+        position: relative;
+        overflow: hidden;
+        padding: 80px 0;
+      }
+      .cta-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: subtle-drift 60s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes subtle-drift {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+      }
+      .cta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+      @media (max-width: 991px) {
+        .cta-grid { grid-template-columns: 1fr; gap: 40px; }
+      }
+      .cta-left { position: relative; z-index: 1; }
+      .cta-label {
+        display: inline-block;
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+      .cta-heading {
+        color: #fff;
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 1.15;
+        margin: 0 0 20px 0;
+      }
+      @media (max-width: 767px) {
+        .cta-heading { font-size: 32px; }
+      }
+      .cta-body {
+        color: rgba(255,255,255,0.85);
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+      .cta-checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 32px 0;
+      }
+      .cta-checklist li {
+        color: rgba(255,255,255,0.9);
+        font-size: 16px;
+        padding: 8px 0;
+        padding-left: 28px;
+        position: relative;
+      }
+      .cta-checklist li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 12px;
+        width: 16px;
+        height: 16px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2372f5a3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center;
+        background-size: contain;
+      }
+      .cta-microcopy {
+        color: rgba(255,255,255,0.6);
+        font-size: 14px;
+        margin-top: 16px;
+      }
+      .cta-right {
+        background: #fff;
+        border-radius: 12px;
+        padding: 36px;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      }
+      .calc-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #262626;
+        margin: 0 0 8px 0;
+      }
+      .calc-subtitle {
+        font-size: 15px;
+        color: #6d6d6d;
+        margin: 0 0 28px 0;
+      }
+      .calc-form { display: flex; flex-direction: column; gap: 20px; }
+      .calc-field label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 8px;
+      }
+      .calc-field input[type="number"],
+      .calc-field input[type="email"] {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 16px;
+        border: 1px solid #d1d1d1;
+        border-radius: 8px;
+        background: #f6f6f6;
+        transition: border-color 0.2s, background 0.2s;
+        box-sizing: border-box;
+      }
+      .calc-field input:focus {
+        outline: none;
+        border-color: #1c26e6;
+        background: #fff;
+      }
+      .calc-btn {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        background: #1c26e6;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+      }
+      .calc-btn:hover { background: #1a24b9; }
+      .calc-btn:active { transform: scale(0.98); }
+      .calc-result {
+        display: none;
+        text-align: center;
+        padding: 24px 0 0 0;
+        border-top: 1px solid #e7e7e7;
+        margin-top: 8px;
+      }
+      .calc-result.visible { display: block; animation: fadeSlideUp 0.4s ease-out; }
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .calc-result-label {
+        font-size: 14px;
+        color: #6d6d6d;
+        margin-bottom: 8px;
+      }
+      .calc-result-value {
+        font-size: 48px;
+        font-weight: 700;
+        color: #1c26e6;
+        margin-bottom: 4px;
+        font-variant-numeric: tabular-nums;
+      }
+      .calc-result-period {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 20px;
+      }
+      .calc-pdf-section {
+        display: none;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e7e7e7;
+      }
+      .calc-pdf-section.visible { display: block; animation: fadeSlideUp 0.4s ease-out 0.2s both; }
+      .calc-pdf-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 4px;
+      }
+      .calc-pdf-desc {
+        font-size: 14px;
+        color: #6d6d6d;
+        margin-bottom: 16px;
+      }
+      .calc-email-row {
+        display: flex;
+        gap: 10px;
+      }
+      .calc-email-row input {
+        flex: 1;
+      }
+      .calc-email-row button {
+        white-space: nowrap;
+        padding: 14px 20px;
+      }
+      @media (max-width: 480px) {
+        .calc-email-row { flex-direction: column; }
+        .calc-email-row button { width: 100%; }
+      }
+      .calc-success {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #f0fdf4;
+        border-radius: 8px;
+        color: #166534;
+        font-weight: 500;
+      }
+      .calc-success.visible { display: block; animation: fadeSlideUp 0.3s ease-out; }
+    </style>
     <div class="w-layout-blockcontainer container w-container">
-      <div class="w-layout-grid join-with-us-grid">
-        <div class="join-with-us-div">
-          <div class="join-with-us-card">
-            <div class="common-heading-div">
-              <h2 data-w-id="94e5d15c-e052-25d8-c38c-380fac2bb0a5" style="opacity:0" class="h2-heading white-text">Ready to Elevate Your Business? <span class="join-with-us-heading-span">Let’s Build Something Extraordinary.</span></h2>
-              <div data-w-id="290eb34e-2f7a-20f8-5487-3f7e8f8fb516" style="opacity:0" class="button-div">
-                <a href="contact-us.html" class="common-button white-button w-button">Contact Now</a>
-              </div>
-            </div>
-            <div class="company-logo-div">
-              <div data-w-id="e3931b76-30fb-7aba-62c4-8472d8e1b65c" style="opacity:0" class="sub-heading white-text">Trusted by SMBs nationwide:</div>
-              <div data-w-id="bfde76e7-9a21-0468-b36c-705a910e8bbb" style="opacity:0" class="company-logo-image-div"><img src="images/company-logo1.svg" loading="lazy" alt="" class="company-logo-image"><img src="images/company-logo2.svg" loading="lazy" alt="" class="company-logo-image"><img src="images/company-logo3.svg" loading="lazy" alt="" class="company-logo-image"><img src="images/company-logo4.svg" loading="lazy" alt="" class="company-logo-image"></div>
-            </div>
-          </div>
+      <div class="cta-grid">
+        <div class="cta-left">
+          <div class="cta-label">Free 15-Minute Assessment</div>
+          <h2 class="cta-heading">What Would You Do with 30% Less Overhead?</h2>
+          <p class="cta-body">Book a free call. We'll audit your operations and show you exactly where AI can save you time and money.</p>
+          <ul class="cta-checklist">
+            <li>3 automations tailored to your business</li>
+            <li>Projected monthly savings estimate</li>
+            <li>No commitment. No pitch.</li>
+          </ul>
+          <a href="contact-us.html" class="common-button white-button w-button">Book Your Free Call</a>
+          <p class="cta-microcopy">15 minutes. Real insights. Zero pressure.</p>
         </div>
-        <div class="join-with-us-div">
-          <div data-w-id="22925d4e-c829-78ce-867f-799bdb9ac421" style="opacity:0" class="join-with-us-image-div"><img src="images/join-with-image_1join-with-image.webp" loading="lazy" sizes="100vw" srcset="images/join-with-image_1join-with-image.webp 500w, images/join-with-image_1join-with-image.webp 800w, images/join-with-image_1join-with-image.webp 1080w, images/join-with-image_1join-with-image.webp 1560w" alt="Join With Us Image" class="join-with-us-image">
-            <div class="join-with-image-overlay"></div>
-            <div class="join-with-us-small-image-div"><img src="images/join-with-image_1join-with-image.webp" loading="lazy" sizes="100vw" srcset="images/join-with-image_1join-with-image.webp 500w, images/join-with-image_1join-with-image.webp 800w, images/join-with-image_1join-with-image.webp 1080w, images/join-with-image_1join-with-image.webp 1560w" alt="Join With Us Image" class="join-with-us-small-image">
-              <div class="join-with-image-gradient-overlay"></div><img src="images/join-with-icon2.svg" loading="lazy" style="opacity:0" data-w-id="e5274659-7977-98ee-59c9-1b399f13dbb6" alt="" class="join-with-us-icon-02">
-            </div><img src="images/join-with-icon1.svg" loading="lazy" style="opacity:0" data-w-id="a7ece927-9309-9b8b-163c-d5d141e0a60a" alt="" class="join-with-us-icon-01">
+        <div class="cta-right">
+          <h3 class="calc-title">See Your Potential Savings</h3>
+          <p class="calc-subtitle">Quick estimate based on your team size</p>
+          <div class="calc-form" id="calc-form">
+            <div class="calc-field">
+              <label for="team-size">Team members handling admin tasks</label>
+              <input type="number" id="team-size" min="1" max="500" placeholder="e.g. 5">
+            </div>
+            <div class="calc-field">
+              <label for="hours-week">Hours spent on repetitive tasks per week (total)</label>
+              <input type="number" id="hours-week" min="1" max="1000" placeholder="e.g. 40">
+            </div>
+            <button type="button" class="calc-btn" id="calc-btn">Calculate My Savings</button>
           </div>
+          <div class="calc-result" id="calc-result">
+            <div class="calc-result-label">Estimated savings</div>
+            <div class="calc-result-value" id="calc-value">$0</div>
+            <div class="calc-result-period">per month</div>
+          </div>
+          <div class="calc-pdf-section" id="calc-pdf-section">
+            <div class="calc-pdf-title">Get Your Free Automation Audit</div>
+            <p class="calc-pdf-desc">We'll send a personalized PDF with specific automation opportunities for your business.</p>
+            <div class="calc-email-row">
+              <input type="email" id="calc-email" placeholder="you@company.com">
+              <button type="button" class="calc-btn" id="calc-send-btn">Send Report</button>
+            </div>
+          </div>
+          <div class="calc-success" id="calc-success">Check your inbox! Your automation audit is on its way.</div>
         </div>
       </div>
-    </div><img src="images/join-with-us-shape.svg" loading="lazy" alt="" class="join-with-us-shape-image">
+    </div>
+    <script>
+      (function() {
+        const calcBtn = document.getElementById('calc-btn');
+        const calcResult = document.getElementById('calc-result');
+        const calcValue = document.getElementById('calc-value');
+        const calcPdfSection = document.getElementById('calc-pdf-section');
+        const calcSendBtn = document.getElementById('calc-send-btn');
+        const calcSuccess = document.getElementById('calc-success');
+        const calcEmail = document.getElementById('calc-email');
+
+        function animateValue(el, start, end, duration) {
+          const startTime = performance.now();
+          const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+          function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(start + (end - start) * eased);
+            el.textContent = formatter.format(current);
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+        }
+
+        calcBtn.addEventListener('click', function() {
+          const teamSize = parseInt(document.getElementById('team-size').value) || 0;
+          const hoursWeek = parseInt(document.getElementById('hours-week').value) || 0;
+          if (teamSize < 1 || hoursWeek < 1) {
+            alert('Please enter valid numbers for both fields.');
+            return;
+          }
+          // Formula: (hours * avg_hourly_cost * 4 weeks * efficiency_gain)
+          const hourlyRate = 35;
+          const efficiencyGain = 0.30;
+          const monthlySavings = Math.round(hoursWeek * hourlyRate * 4 * efficiencyGain);
+
+          calcResult.classList.add('visible');
+          animateValue(calcValue, 0, monthlySavings, 800);
+
+          setTimeout(function() {
+            calcPdfSection.classList.add('visible');
+          }, 600);
+        });
+
+        calcSendBtn.addEventListener('click', function() {
+          const email = calcEmail.value.trim();
+          if (!email || !email.includes('@')) {
+            alert('Please enter a valid email address.');
+            return;
+          }
+          // In production, this would submit to your backend
+          calcPdfSection.style.display = 'none';
+          calcSuccess.classList.add('visible');
+        });
+      })();
+    </script>
   </section>
   <section id="services" class="section">
     <div class="w-layout-blockcontainer container w-container">
