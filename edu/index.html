@@ -2,8 +2,8 @@
 <html data-wf-page="68e2b5037ce335565e421400" data-wf-site="68e2b5017ce335565e4212dc" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Semperr | AI Foundations - Practical AI Training for High Schoolers</title>
-  <meta content="An 8-week hands-on AI course designed to give students practical skills they can use immediately. No theoretical nonsense - just real-world applications." name="description">
+  <title>Semperr | Education - AI Training Programs</title>
+  <meta content="Practical AI training programs for high school students and working professionals. Learn real-world AI skills from UC Berkeley engineers and industry veterans." name="description">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
   <link href="../css/normalize.css" rel="stylesheet" type="text/css">
@@ -61,7 +61,176 @@
       75% { transform: translate(20px, 10px) scale(1.02); }
     }
 
-    /* Typewriter Effect */
+    /* Hero Content Styling */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-subtext {
+      max-width: 700px;
+      margin: 24px auto 48px;
+      text-align: center;
+    }
+
+    /* Header scroll transition */
+    .header {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .header .toggle-text {
+      transition: color 0.3s ease;
+    }
+    .header .logo,
+    .header .menu-toggle {
+      transition: filter 0.3s ease;
+    }
+
+    /* Program Cards */
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    @media (max-width: 767px) {
+      .program-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .program-card {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+    }
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #1c26e6, #6a8cff, #0d7377);
+      transition: height 0.3s ease;
+    }
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+      border-color: rgba(28, 38, 230, 0.1);
+    }
+    .program-card:hover::before {
+      height: 6px;
+    }
+
+    .program-card.professional {
+      background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+      color: white;
+    }
+    .program-card.professional::before {
+      background: linear-gradient(90deg, #6a4c93, #0f3460, #1c26e6);
+    }
+    .program-card.professional .program-description {
+      color: rgba(255,255,255,0.8);
+    }
+    .program-card.professional .program-feature {
+      color: rgba(255,255,255,0.9);
+    }
+    .program-card.professional .program-feature svg {
+      stroke: rgba(255,255,255,0.7);
+    }
+
+    .program-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .program-badge.students {
+      background: #ebf2ff;
+      color: #1c26e6;
+    }
+    .program-badge.professionals {
+      background: rgba(255,255,255,0.15);
+      color: white;
+    }
+
+    .program-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .program-description {
+      font-size: 16px;
+      color: #6d6d6d;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .program-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .program-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #4f4f4f;
+    }
+    .program-feature svg {
+      width: 20px;
+      height: 20px;
+      stroke: #1c26e6;
+      stroke-width: 2.5;
+      flex-shrink: 0;
+    }
+
+    .program-cta {
+      display: inline-block;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .program-cta.primary {
+      background: linear-gradient(135deg, #1c26e6 0%, #1a24b9 100%);
+      color: white;
+    }
+    .program-cta.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(28, 38, 230, 0.3);
+    }
+    .program-cta.light {
+      background: white;
+      color: #0f3460;
+    }
+    .program-cta.light:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Typewriter */
     .typewriter-container {
       height: 28px;
       margin-bottom: 20px;
@@ -82,184 +251,6 @@
     @keyframes blink {
       from, to { border-color: transparent; }
       50% { border-color: rgba(255, 255, 255, 0.8); }
-    }
-
-    /* Curriculum Cards Enhanced */
-    .curriculum-card {
-      background-color: #fff;
-      border-radius: 20px;
-      padding: 32px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid #e7e7e7;
-      position: relative;
-      overflow: hidden;
-    }
-    .curriculum-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #1c26e6, #6a8cff, #0d7377);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .curriculum-card:hover {
-      box-shadow: 0 20px 60px rgba(28, 38, 230, 0.15), 0 0 0 1px rgba(28, 38, 230, 0.1);
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(28, 38, 230, 0.2);
-    }
-    .curriculum-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    /* Week Badge Enhanced */
-    .week-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #1c26e6 0%, #6a4c93 100%);
-      color: white;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 24px;
-      margin-bottom: 20px;
-      letter-spacing: 0.5px;
-    }
-
-    /* Curriculum Icon */
-    .curriculum-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #ebf2ff 0%, #fff 100%);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      border: 1px solid #e7e7e7;
-      transition: all 0.3s ease;
-    }
-    .curriculum-card:hover .curriculum-icon {
-      background: linear-gradient(135deg, #1c26e6 0%, #6a8cff 100%);
-      border-color: transparent;
-    }
-    .curriculum-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: #1c26e6;
-      stroke-width: 1.5;
-      fill: none;
-      transition: stroke 0.3s ease;
-    }
-    .curriculum-card:hover .curriculum-icon svg {
-      stroke: white;
-    }
-
-    .curriculum-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px;
-    }
-    @media (max-width: 991px) {
-      .curriculum-grid {
-        gap: 20px;
-      }
-    }
-    @media (max-width: 767px) {
-      .curriculum-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .feature-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.3s ease;
-    }
-    .feature-badge:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-    }
-
-    .highlight-box {
-      background: linear-gradient(135deg, #f8faff 0%, #fff 100%);
-      border-left: 4px solid #1c26e6;
-      padding: 20px 24px;
-      border-radius: 0 12px 12px 0;
-      margin: 20px 0;
-    }
-
-    .tool-tag {
-      display: inline-block;
-      background-color: #f6f6f6;
-      color: #4f4f4f;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: 6px;
-      margin: 4px 4px 4px 0;
-      transition: all 0.2s ease;
-    }
-    .tool-tag:hover {
-      background-color: #1c26e6;
-      color: white;
-    }
-
-    .counseling-card {
-      background: linear-gradient(135deg, #1c26e6 0%, #1a24b9 100%);
-      border-radius: 16px;
-      padding: 48px;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .counseling-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    }
-
-    /* Hero Content Styling */
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .hero-subtext {
-      max-width: 600px;
-      margin: 24px auto 32px;
-      text-align: center;
-    }
-
-    /* Header scroll transition */
-    .header {
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    .header .toggle-text {
-      transition: color 0.3s ease;
-    }
-    .header .logo,
-    .header .menu-toggle {
-      transition: filter 0.3s ease;
     }
   </style>
 </head>
@@ -311,425 +302,60 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="hero-section hero-animated" style="min-height: 85vh; display: flex; align-items: center;">
+  <section class="hero-section hero-animated" style="min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px;">
     <div class="w-layout-blockcontainer container w-container">
       <div class="hero-content">
         <!-- Typewriter Effect -->
         <div class="typewriter-container">
           <span class="typewriter-text" id="typewriter"></span>
         </div>
-        <h1 class="h1-heading home-hero-heading" style="font-size: 64px; line-height: 1.15; color: white; margin-bottom: 0;">AI Foundations</h1>
-        <p class="large-paragraph home-hero-paragraph hero-subtext" style="color: rgba(255,255,255,0.85);">An 8-week hands-on course teaching practical AI skills. No theoretical nonsense - just real-world applications you can use immediately.</p>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a href="/edu-apply" class="common-button white-button w-button">Enroll Now</a>
-          <div class="feature-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            College Counseling Included
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <h1 class="h1-heading home-hero-heading" style="font-size: 64px; line-height: 1.15; color: white; margin-bottom: 0;">AI Education Programs</h1>
+        <p class="large-paragraph home-hero-paragraph hero-subtext" style="color: rgba(255,255,255,0.85);">Practical AI training built by UC Berkeley engineers and industry veterans. Choose the program that fits your stage in life.</p>
 
-  <!-- What You'll Learn Section -->
-  <section class="section">
-    <div class="w-layout-blockcontainer container w-container">
-      <div class="common-heading-div" style="text-align: left; margin-bottom: 60px;">
-        <div class="sub-heading">Course Overview</div>
-        <h2 class="h2-heading">Everything is Practical</h2>
-        <p class="paragraph" style="max-width: 600px; margin: 16px 0 0;">Every session is hands-on. You'll build real projects, use industry tools, and walk away with skills you can apply immediately.</p>
-      </div>
-
-      <div class="w-layout-grid our-ecosystem-grid" style="gap: 32px;">
-        <div class="our-ecosystem-div">
-          <div class="our-ecosystem-card">
-            <div class="our-ecosystem-icon-div"><img src="../images/service-icon1.svg" loading="lazy" alt="" class="our-ecosystem-icon"></div>
-            <div class="our-ecosystem-count-div">
-              <div class="h3-heading">Hands-On Projects</div>
-            </div>
-            <div class="gray-200-line"></div>
-            <p class="paragraph our-ecosystem-paragraph">Build a personal AI assistant, deploy your own website, create deepfakes (ethically), and present data-driven solutions to real problems.</p>
-          </div>
-        </div>
-        <div class="our-ecosystem-div">
-          <div class="our-ecosystem-card">
-            <div class="our-ecosystem-icon-div"><img src="../images/service-icon5.svg" loading="lazy" alt="" class="our-ecosystem-icon"></div>
-            <div class="our-ecosystem-count-div">
-              <div class="h3-heading">Industry Tools</div>
-            </div>
-            <div class="gray-200-line"></div>
-            <p class="paragraph our-ecosystem-paragraph">Learn the same tools professionals use: Claude, ChatGPT, Midjourney, ElevenLabs, Zapier, Replit, Cursor, and more.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- College Counseling Included Section -->
-  <section class="section bg-gray">
-    <div class="w-layout-blockcontainer container w-container">
-      <div class="counseling-card">
-        <div style="position: relative; z-index: 1;">
-          <div class="sub-heading white-text" style="opacity: 0.8; margin-bottom: 16px;">Included With Every Enrollment</div>
-          <h2 class="h2-heading white-text" style="margin-bottom: 24px;">College Counseling Included</h2>
-          <p class="paragraph white-800-color" style="max-width: 600px; margin-bottom: 32px;">Every student gets access to personalized college counseling. We'll help you build an AI-powered College Counselor Agent that knows your top 5 target schools inside and out.</p>
-          <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              <span class="paragraph white-text">Personalized AI Agent</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              <span class="paragraph white-text">Top 5 School Research</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              <span class="paragraph white-text">Application Strategy</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8-Week Curriculum Section -->
-  <section class="section">
-    <div class="w-layout-blockcontainer container w-container">
-      <div class="common-heading-div" style="text-align: center; margin-bottom: 60px;">
-        <div class="sub-heading">8-Week Program</div>
-        <h2 class="h2-heading">The Curriculum</h2>
-        <p class="paragraph" style="max-width: 600px; margin: 16px auto 0;">Each week builds on the last. By the end, you'll have a portfolio of AI projects and the skills to keep building.</p>
-      </div>
-
-      <div class="curriculum-grid">
-        <!-- Week 1 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="8.5" cy="14.5" r="1.5"/><circle cx="15.5" cy="14.5" r="1.5"/></svg>
-          </div>
-          <div class="week-badge">Week 1</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Intro to LLMs</div>
-          <p class="paragraph" style="margin-bottom: 16px;">Understand how large language models work under the hood. Explore the transformer architecture and see what makes models "large" vs "small."</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Hands-on:</strong> Use Google Teachable Machine to see how changing weights affects model behavior. Jailbreak an LLM to understand context windows.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">ChatGPT</span>
-            <span class="tool-tag">Claude</span>
-            <span class="tool-tag">Teachable Machine</span>
-          </div>
-        </div>
-
-        <!-- Week 2 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
-          </div>
-          <div class="week-badge">Week 2</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Context Engineering</div>
-          <p class="paragraph" style="margin-bottom: 16px;">Build a persistent AI personality that remembers you. Learn how to use project knowledge bases to upload writing style, past projects, and interests.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Project:</strong> Create a College Counselor Agent with knowledge of your top 5 target colleges built into its memory.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">Claude Projects</span>
-            <span class="tool-tag">Knowledge Bases</span>
-            <span class="tool-tag">Custom Instructions</span>
-          </div>
-        </div>
-
-        <!-- Week 3 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <div class="week-badge">Week 3</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Multi-Modal Problem Solving</div>
-          <p class="paragraph" style="margin-bottom: 16px;">Dive into vision models - how they work and why they sometimes break. Learn to leverage AI for creative and technical tasks.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Project:</strong> Draw a website frontend on paper, photograph it, and have Claude write the code for it.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">Vision Models</span>
-            <span class="tool-tag">Claude</span>
-            <span class="tool-tag">Image-to-Code</span>
-          </div>
-        </div>
-
-        <!-- Week 4 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-          </div>
-          <div class="week-badge">Week 4</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">AI Automation</div>
-          <p class="paragraph" style="margin-bottom: 16px;">Learn to orchestrate AI to take multiple steps without being asked twice. Understand "if this, then that" logic at a high level.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Project:</strong> Build an agent that finds trending topics in a specific niche and writes tweets automatically.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">Zapier</span>
-            <span class="tool-tag">Automation</span>
-            <span class="tool-tag">AI Agents</span>
-          </div>
-        </div>
-
-        <!-- Week 5 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
-          </div>
-          <div class="week-badge">Week 5</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Coding Without Syntax</div>
-          <p class="paragraph" style="margin-bottom: 16px;">AI breaks down the walls of traditional coding. Learn how to describe what you want and let AI handle the syntax.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Project:</strong> Build and deploy your own "Link in Bio" website from scratch using AI coding assistants.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">Replit Agent</span>
-            <span class="tool-tag">Cursor</span>
-            <span class="tool-tag">Deployment</span>
-          </div>
-        </div>
-
-        <!-- Week 6 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-          </div>
-          <div class="week-badge">Week 6</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Deepfakes & Safety</div>
-          <p class="paragraph" style="margin-bottom: 16px;">It's incredibly easy to make a lifelike digital clone of someone. We'll prove it by doing exactly that - then learn how to spot fakes.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Project:</strong> Create a deepfake of yourself, then analyze the forensic markers that prove it's fake.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">ElevenLabs</span>
-            <span class="tool-tag">Midjourney</span>
-            <span class="tool-tag">Content Credentials</span>
-          </div>
-        </div>
-
-        <!-- Week 7 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
-          </div>
-          <div class="week-badge">Week 7</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Data Science</div>
-          <p class="paragraph" style="margin-bottom: 16px;">Feed large datasets into an LLM to find trends. Use real data to identify ways to improve your neighborhood or school.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Project:</strong> Develop a unique proposal to improve your community based on actual data analysis.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">Data Analysis</span>
-            <span class="tool-tag">Pandas</span>
-            <span class="tool-tag">NumPy</span>
-          </div>
-        </div>
-
-        <!-- Week 8 -->
-        <div class="curriculum-card">
-          <div class="curriculum-icon">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div class="week-badge">Week 8</div>
-          <div class="h4-heading" style="margin-bottom: 12px;">Demo Day</div>
-          <p class="paragraph" style="margin-bottom: 16px;">Present your final project to the class. Based on your Week 7 proposal, build and demonstrate a solution using multiple AI tools.</p>
-          <div class="highlight-box">
-            <p class="small-paragraph" style="margin: 0;"><strong>Requirement:</strong> Your solution must incorporate at least 2 different AI tools working together.</p>
-          </div>
-          <div style="margin-top: 16px;">
-            <span class="tool-tag">Presentation</span>
-            <span class="tool-tag">Portfolio Project</span>
-            <span class="tool-tag">Multi-Tool Integration</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="section bg-blue position-relative">
-    <div class="w-layout-blockcontainer container w-container">
-      <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <h2 class="h2-heading white-text" style="margin-bottom: 24px;">Ready to Get Ahead?</h2>
-        <p class="paragraph white-800-color" style="margin-bottom: 32px;">Join a cohort of students learning practical AI skills that will set them apart in college applications and beyond.</p>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a href="/edu-apply" class="common-button white-button w-button">Enroll Now</a>
-          <a href="/contact-us" class="common-button w-button" style="background: transparent; border: 2px solid white;">Ask a Question</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="section">
-    <div class="w-layout-blockcontainer container w-container">
-      <div class="common-heading-div" style="text-align: center; margin-bottom: 40px;">
-        <div class="sub-heading">Student Feedback</div>
-        <h2 class="h2-heading">What Students Say</h2>
-        <p class="paragraph">Real feedback from students who completed the program.</p>
-      </div>
-      <div class="testimonial-wrapper">
-        <div data-delay="4000" data-animation="slide" class="testimonial-slider-wrapper w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="6" data-duration="600" data-infinite="true">
-          <div class="w-slider-mask">
-            <div class="testimonial-slider w-slide">
-              <div class="testimonial-card">
-                <div class="testimonial-review-div"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"></div>
-                <div class="testimonial-detail-div">
-                  <div class="h4-heading">Actually useful skills.</div>
-                  <p class="large-paragraph">"I thought I knew AI because I used ChatGPT. This course showed me I was barely scratching the surface. The College Counselor Agent I built is something I still use every day."</p>
-                </div>
-                <div class="testimonial-user-info-div"><img src="../images/user1.jpg" loading="lazy" alt="User Image" class="testimonial-user-image">
-                  <div class="testimonial-info">
-                    <div class="large-paragraph bold-text">Jordan K.</div>
-                    <div class="small-paragraph">High School Junior</div>
-                  </div>
-                </div>
+        <!-- Program Cards -->
+        <div class="program-grid">
+          <!-- High School Program -->
+          <div class="program-card">
+            <span class="program-badge students">For High Schoolers</span>
+            <h2 class="program-title">AI Foundations</h2>
+            <p class="program-description">An 8-week hands-on course teaching practical AI skills. No theoretical nonsense - just real-world applications you can use immediately.</p>
+            <div class="program-features">
+              <div class="program-feature">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>College Counseling Included</span>
+              </div>
+              <div class="program-feature">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Build a Portfolio of Projects</span>
+              </div>
+              <div class="program-feature">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>No Coding Experience Required</span>
               </div>
             </div>
-            <div class="testimonial-slider w-slide">
-              <div class="testimonial-card">
-                <div class="testimonial-review-div"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"></div>
-                <div class="testimonial-detail-div">
-                  <div class="h4-heading">No boring lectures.</div>
-                  <p class="large-paragraph">"Every class we built something. I deployed my first website in Week 5 and now I'm building tools for my robotics club. The deepfake week was wild - learned so much about media literacy."</p>
-                </div>
-                <div class="testimonial-user-info-div"><img src="../images/user2.jpg" loading="lazy" alt="User Image" class="testimonial-user-image">
-                  <div class="testimonial-info">
-                    <div class="large-paragraph bold-text">Tom S.</div>
-                    <div class="small-paragraph">High School Senior</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="testimonial-slider w-slide">
-              <div class="testimonial-card">
-                <div class="testimonial-review-div"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/five-star.svg" loading="lazy" alt="" class="review-star-icon"><img src="../images/star-light.svg" loading="lazy" alt="" class="review-star-icon"></div>
-                <div class="testimonial-detail-div">
-                  <div class="h4-heading">Wrote about it in my essays.</div>
-                  <p class="large-paragraph">"My Demo Day project analyzing local traffic data became a centerpiece of my college application. Admissions officers loved that I could talk about real technical work, not just theory."</p>
-                </div>
-                <div class="testimonial-user-info-div"><img src="../images/user3.jpg" loading="lazy" alt="User Image" class="testimonial-user-image">
-                  <div class="testimonial-info">
-                    <div class="large-paragraph bold-text">Alex T.</div>
-                    <div class="small-paragraph">Admitted to UC Berkeley</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/edu/ai-foundations" class="program-cta primary">Learn More</a>
           </div>
-          <div class="team-slider-arrow w-slider-arrow-left">
-            <div class="w-icon-slider-left"></div>
-          </div>
-          <div class="team-slider-arrow w-slider-arrow-right">
-            <div class="w-icon-slider-right"></div>
-          </div>
-          <div class="team-slider-nav w-slider-nav w-slider-nav-invert w-round"></div>
-          <div class="hide w-embed">
-            <style>
-.w-slider-nav-invert > div {
-    background-color: #D1D1D1;
-}
-.w-slider-dot {
-    cursor: pointer;
-    background-color: #D1D1D1;
-    width: 10px;
-    height: 10px;
-    margin: 0;
-}
-.w-slider-nav-invert > div.w-active {
-    background-color: #1C26E6;
-    width: 16px;
-    height: 16px;
-}
-</style>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- FAQs Section -->
-  <section class="section bg-gray">
-    <div class="w-layout-blockcontainer container w-container">
-      <div class="w-layout-grid faq-grid">
-        <div class="faq-div">
-          <div class="common-heading-div">
-            <h2 class="h2-heading">FAQs</h2>
-            <p class="paragraph faq-paragraph">Common questions about the AI Foundations course.</p>
-          </div>
-        </div>
-        <div class="faq-div">
-          <div class="accordion-wrapper">
-            <div class="accordion-div">
-              <div data-delay="0" data-hover="false" class="accordion w-dropdown">
-                <div class="accordion-toggle w-dropdown-toggle">
-                  <div class="faq-toggle-div"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-01"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-02"></div>
-                  <div class="large-paragraph bold-text faq-heading">Do I need coding experience?</div>
-                </div>
-                <nav class="accordion-list w-dropdown-list">
-                  <p class="paragraph faq-ans">No prior coding experience is required. Week 5 specifically covers "Coding Without Syntax" - using AI to build without needing to know programming languages. That said, if you want to go deeper into the engineering side, we can arrange that separately.</p>
-                </nav>
+          <!-- Professional Program -->
+          <div class="program-card professional">
+            <span class="program-badge professionals">For Working Professionals</span>
+            <h2 class="program-title">AI Advantage</h2>
+            <p class="program-description">An intensive 8-week executive program for professionals who refuse to be left behind. Master enterprise AI deployment and agentic workflows.</p>
+            <div class="program-features">
+              <div class="program-feature">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Production-Ready Deployments</span>
+              </div>
+              <div class="program-feature">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Apply to Real Work Projects</span>
+              </div>
+              <div class="program-feature">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Limited to 12 Per Cohort</span>
               </div>
             </div>
-            <div class="accordion-div">
-              <div data-delay="0" data-hover="false" class="accordion w-dropdown">
-                <div class="accordion-toggle w-dropdown-toggle">
-                  <div class="faq-toggle-div"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-01"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-02"></div>
-                  <div class="large-paragraph bold-text faq-heading">What's included in the college counseling?</div>
-                </div>
-                <nav class="accordion-list w-dropdown-list">
-                  <p class="paragraph faq-ans">In Week 2, every student builds a personalized College Counselor Agent with deep knowledge of their top 5 target schools. This agent remembers your writing style, interests, and past projects. It's a tool you'll keep using long after the course ends.</p>
-                </nav>
-              </div>
-            </div>
-            <div class="accordion-div">
-              <div data-delay="0" data-hover="false" class="accordion w-dropdown">
-                <div class="accordion-toggle w-dropdown-toggle">
-                  <div class="faq-toggle-div"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-01"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-02"></div>
-                  <div class="large-paragraph bold-text faq-heading">What age group is this for?</div>
-                </div>
-                <nav class="accordion-list w-dropdown-list">
-                  <p class="paragraph faq-ans">The course is designed for high school students, but the content is college-level. We focus on practical applications that prepare students for both higher education and the real world.</p>
-                </nav>
-              </div>
-            </div>
-            <div class="accordion-div">
-              <div data-delay="0" data-hover="false" class="accordion w-dropdown">
-                <div class="accordion-toggle w-dropdown-toggle">
-                  <div class="faq-toggle-div"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-01"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-02"></div>
-                  <div class="large-paragraph bold-text faq-heading">Is the deepfake lesson ethical?</div>
-                </div>
-                <nav class="accordion-list w-dropdown-list">
-                  <p class="paragraph faq-ans">Absolutely. We teach students to create deepfakes of themselves specifically to understand how they work and how to detect them. Understanding the technology is the first step to protecting against misuse. We cover content credentials, forensic markers, and the safeguards that exist.</p>
-                </nav>
-              </div>
-            </div>
-            <div class="accordion-div">
-              <div data-delay="0" data-hover="false" class="accordion w-dropdown">
-                <div class="accordion-toggle w-dropdown-toggle">
-                  <div class="faq-toggle-div"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-01"><img src="../images/accordion-toggle.svg" loading="lazy" alt="" class="faq-toggle-02"></div>
-                  <div class="large-paragraph bold-text faq-heading">What do I need to participate?</div>
-                </div>
-                <nav class="accordion-list w-dropdown-list">
-                  <p class="paragraph faq-ans">A laptop and internet connection. Some weeks require specific setup (Week 3 for the vision model project), but we'll walk through everything. Most tools we use have free tiers or educational access.</p>
-                </nav>
-              </div>
-            </div>
+            <a href="/edu/ai-advantage" class="program-cta light">Learn More</a>
           </div>
         </div>
       </div>
@@ -795,9 +421,8 @@
       "Built by UC Berkeley Engineers",
       "Silicon Valley's Premier Curriculum",
       "Mastery Taught by Industry Veterans",
-      "From Big Tech to Your Classroom",
-      "Experience from Apple, Meta & More",
-      "Award-Winning AI Education"
+      "From Big Tech to Your Growth",
+      "Experience from Apple, Meta & More"
     ];
 
     const typewriter = document.getElementById('typewriter');
@@ -821,22 +446,19 @@
 
       if (!isDeleting && charIndex === currentPhrase.length) {
         isDeleting = true;
-        typingSpeed = 2000; // Pause at end
+        typingSpeed = 2000;
       } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
-        typingSpeed = 500; // Pause before next phrase
+        typingSpeed = 500;
       }
 
       setTimeout(type, typingSpeed);
     }
 
-    // Header scroll behavior - matches index page
     document.addEventListener('DOMContentLoaded', function() {
-      // Start typewriter
       setTimeout(type, 1000);
 
-      // Header scroll effect
       const header = document.querySelector('.header');
       const heroSection = document.querySelector('.hero-section');
 
@@ -850,7 +472,6 @@
             header.style.backgroundColor = 'white';
             header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
             header.style.borderBottom = '1px solid #e7e7e7';
-            // Change text/icon colors for visibility on white bg
             const toggleText = header.querySelector('.toggle-text');
             const menuToggle = header.querySelector('.menu-toggle');
             const logo = header.querySelector('.logo');
@@ -861,7 +482,6 @@
             header.style.backgroundColor = 'transparent';
             header.style.boxShadow = 'none';
             header.style.borderBottom = '1px solid transparent';
-            // Revert to white/light appearance
             const toggleText = header.querySelector('.toggle-text');
             const menuToggle = header.querySelector('.menu-toggle');
             const logo = header.querySelector('.logo');
