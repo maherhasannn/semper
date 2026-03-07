@@ -122,54 +122,129 @@
 
     .screenshots > div:last-child { margin-bottom: 0; }
 
-    /* AI Tool Mockup */
-    .mockup-ai {
+    /* Quiz Trigger */
+    .mockup-quiz {
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
       border: 1px solid #D1D1D1;
       background: #fff;
+      cursor: pointer;
     }
 
-    .mockup-ai-header {
+    .mockup-quiz:hover {
+      border-color: #1A1A1A;
+    }
+
+    .mockup-quiz-inner {
+      padding: 24px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid #D1D1D1;
-      font-size: 14px;
+    }
+
+    .mockup-quiz-title {
+      font-size: 16px;
       font-weight: 600;
       color: #1A1A1A;
     }
 
-    .mockup-ai-label {
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .mockup-quiz-hint {
+      font-size: 13px;
       color: #1A1A1A;
       opacity: 0.6;
-      margin-bottom: 4px;
     }
 
-    .mockup-ai-block {
-      padding: 16px 20px;
+    /* Quiz Modal */
+    .quiz-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 26, 26, 0.4);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .quiz-modal.open {
+      display: flex;
+    }
+
+    .quiz-modal-box {
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #F6F6EF;
+      border: 1px solid #D1D1D1;
+      padding: 0;
+    }
+
+    .quiz-modal-header {
+      padding: 20px 24px;
       border-bottom: 1px solid #D1D1D1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .mockup-ai-block:last-child { border-bottom: none; }
-
-    .mockup-ai-input {
-      font-size: 14px;
+    .quiz-modal-title {
+      font-size: 16px;
+      font-weight: 600;
       color: #1A1A1A;
+    }
+
+    .quiz-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #1A1A1A;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
       opacity: 0.7;
     }
 
-    .mockup-ai-response {
+    .quiz-modal-close:hover { opacity: 1; }
+
+    .quiz-modal-body {
+      padding: 24px;
+    }
+
+    .quiz-question {
+      margin-bottom: 24px;
+    }
+
+    .quiz-question:last-child { margin-bottom: 0; }
+
+    .quiz-question-label {
       font-size: 14px;
-      line-height: 1.5;
+      font-weight: 500;
       color: #1A1A1A;
-      background: #F6F6EF;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .quiz-question-options label {
+      display: block;
+      padding: 12px 16px;
+      border: 1px solid #D1D1D1;
+      font-size: 14px;
+      color: #1A1A1A;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .quiz-question-options label:hover {
+      border-color: #1A1A1A;
+    }
+
+    .quiz-question-options input {
+      margin-right: 10px;
     }
 
     /* Dashboard Mockup */
@@ -247,6 +322,15 @@
       color: #1A1A1A;
       opacity: 0.8;
     }
+
+    .mockup-dashboard-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1A1A1A;
+      margin: 0 0 12px;
+    }
+
+    .mockup-dashboard-desc:last-child { margin-bottom: 0; }
 
     /* Sections */
     .section {
@@ -551,7 +635,7 @@
 
   <main class="page">
     <section class="hero">
-      <div class="hero-eyebrow">Cohort 2025 — Now Accepting Applications</div>
+      <div class="hero-eyebrow">Cohort Spring 2026 — Now Accepting Applications</div>
       <h1>Master AI. Build the Future. Lead the Way.</h1>
       <p class="hero-subtitle">
         An 8-week intensive program that transforms ambitious students into AI-fluent innovators. Learn from industry experts, build real projects, and gain the competitive edge top companies demand. Our students unlock over $205,240 in credits and infrastructure by Week 2.
@@ -559,36 +643,62 @@
       <a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>
 
       <div class="screenshots">
-        <div class="mockup-ai">
-          <div class="mockup-ai-header">
-            <span>Claude</span>
-            <span style="font-size: 11px; font-weight: 500; opacity: 0.6;">Prompt Engineering · Week 1</span>
-          </div>
-          <div class="mockup-ai-block">
-            <div class="mockup-ai-label">Your prompt</div>
-            <div class="mockup-ai-input">Refine this prompt for better output: "Summarize the article"</div>
-          </div>
-          <div class="mockup-ai-block mockup-ai-response">
-            <div class="mockup-ai-label">Response</div>
-            <p style="margin: 0;">Add structure: specify length, tone, and key points to extract. Try: "Summarize in 3 bullet points. Tone: professional. Include: main argument, supporting evidence, conclusion."</p>
+        <div class="mockup-quiz" id="quiz-trigger">
+          <div class="mockup-quiz-inner">
+            <span class="mockup-quiz-title">Is Semperr right for you?</span>
+            <span class="mockup-quiz-hint">Answer a few questions →</span>
           </div>
         </div>
+
+        <div id="quiz-modal" class="quiz-modal">
+          <div class="quiz-modal-box">
+            <div class="quiz-modal-header">
+              <span class="quiz-modal-title">Is Semperr right for you?</span>
+              <button type="button" class="quiz-modal-close" id="quiz-modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="quiz-modal-body">
+              <div class="quiz-question">
+                <label class="quiz-question-label">Are you a high school student?</label>
+                <div class="quiz-question-options">
+                  <label><input type="radio" name="q1" value="yes"> Yes</label>
+                  <label><input type="radio" name="q1" value="no"> No</label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <label class="quiz-question-label">Do you want to build real AI projects, not just watch tutorials?</label>
+                <div class="quiz-question-options">
+                  <label><input type="radio" name="q2" value="yes"> Yes</label>
+                  <label><input type="radio" name="q2" value="no"> No</label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <label class="quiz-question-label">Are you applying to college in the next 1–2 years?</label>
+                <div class="quiz-question-options">
+                  <label><input type="radio" name="q3" value="yes"> Yes</label>
+                  <label><input type="radio" name="q3" value="no"> No</label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <label class="quiz-question-label">Would you benefit from 1-on-1 mentorship?</label>
+                <div class="quiz-question-options">
+                  <label><input type="radio" name="q4" value="yes"> Yes</label>
+                  <label><input type="radio" name="q4" value="no"> No</label>
+                </div>
+              </div>
+              <a href="../edu/ai-advantage/apply/" class="btn-apply" style="display: inline-block; margin-top: 16px;">Apply</a>
+            </div>
+          </div>
+        </div>
+
         <div class="mockup-dashboard">
-          <div class="mockup-dashboard-header">Semperr Accelerator — Your Progress</div>
+          <div class="mockup-dashboard-header">Beyond the Curriculum</div>
           <div class="mockup-dashboard-block">
-            <div class="mockup-dashboard-title">Progress</div>
-            <div class="mockup-dashboard-progress">Week 2 of 8</div>
-            <div class="mockup-dashboard-bar"><div class="mockup-dashboard-bar-fill"></div></div>
+            <div class="mockup-dashboard-title">Private Network</div>
+            <p class="mockup-dashboard-desc">Access our private network of opportunities: internships, research positions, and early-stage project partnerships. Connect with alumni and industry partners who actively recruit from Semperr.</p>
           </div>
           <div class="mockup-dashboard-block">
-            <div class="mockup-dashboard-title">Modules</div>
-            <div class="mockup-dashboard-item mockup-dashboard-check">Week 1–2: AI Foundations &amp; Prompt Engineering</div>
-            <div class="mockup-dashboard-item current">Week 3–4: Automation &amp; Workflow Integration</div>
-            <div class="mockup-dashboard-item locked">Week 5–6: AI-Powered Development</div>
-            <div class="mockup-dashboard-item locked">Week 7–8: Capstone Project &amp; Portfolio</div>
-          </div>
-          <div class="mockup-dashboard-block">
-            <div class="mockup-dashboard-next">Next up: Build your first automation with Make.com</div>
+            <div class="mockup-dashboard-title">College Essay Review</div>
+            <p class="mockup-dashboard-desc">Get your college essays reviewed by mentors who understand how to frame AI and tech experience for admissions. Stand out with a narrative that showcases real projects and concrete impact.</p>
           </div>
         </div>
       </div>
@@ -816,6 +926,19 @@
     </div>
   </footer>
 
+  <script>
+    (function() {
+      var trigger = document.getElementById('quiz-trigger');
+      var modal = document.getElementById('quiz-modal');
+      var close = document.getElementById('quiz-modal-close');
+      function openModal() { if (modal) modal.classList.add('open'); }
+      function closeModal() { if (modal) modal.classList.remove('open'); }
+      if (trigger) trigger.addEventListener('click', openModal);
+      if (close) close.addEventListener('click', closeModal);
+      if (modal) modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+    })();
+  </script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
