@@ -281,13 +281,13 @@
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
-      border: 1px solid #D1D1D1;
+      border: 1px solid #E0E0E0;
       background: #fff;
     }
 
     .mockup-dashboard-header {
       padding: 16px 20px;
-      border-bottom: 1px solid #D1D1D1;
+      border-bottom: 1px solid #E0E0E0;
       font-size: 15px;
       font-weight: 600;
       color: #1A1A1A;
@@ -361,7 +361,7 @@
 
     .mockup-dashboard-desc:last-child { margin-bottom: 0; }
 
-    /* Beyond Curriculum - visual blocks */
+    /* Career & Admissions Pipeline - visual blocks */
     .beyond-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -376,9 +376,13 @@
     }
 
     .beyond-card {
-      border: 2px solid #1A1A1A;
+      border: 1px solid #E0E0E0;
       padding: 24px;
       background: #fff;
+    }
+
+    .beyond-card.essay-card {
+      border-left: 2px solid #1A1A1A;
     }
 
     .beyond-card-title {
@@ -387,7 +391,7 @@
       color: #1A1A1A;
       margin-bottom: 16px;
       padding-bottom: 12px;
-      border-bottom: 1px solid #D1D1D1;
+      border-bottom: 1px solid #E0E0E0;
     }
 
     .beyond-visual {
@@ -402,16 +406,23 @@
 
     .network-node {
       padding: 8px 12px;
-      border: 1px solid #1A1A1A;
+      border: 1px solid #E0E0E0;
       font-size: 12px;
       font-weight: 600;
       color: #1A1A1A;
     }
 
     .network-node.you {
-      border-width: 2px;
+      border-color: #1A1A1A;
       background: #1A1A1A;
       color: #fff;
+    }
+
+    .beyond-dimmed {
+      font-size: 12px;
+      color: #1A1A1A;
+      opacity: 0.6;
+      margin-top: 12px;
     }
 
     .essay-flow {
@@ -425,7 +436,7 @@
 
     .essay-flow-step {
       padding: 6px 10px;
-      border: 1px solid #D1D1D1;
+      border: 1px solid #E0E0E0;
     }
 
     .essay-flow-arrow {
@@ -438,7 +449,7 @@
       line-height: 1.5;
       color: #1A1A1A;
       padding: 12px;
-      border-left: 2px solid #D1D1D1;
+      border-left: 1px solid #E0E0E0;
       margin-top: 8px;
     }
 
@@ -450,6 +461,25 @@
       line-height: 1.5;
       color: #1A1A1A;
       opacity: 0.9;
+    }
+
+    .beyond-footer {
+      font-size: 11px;
+      color: #1A1A1A;
+      opacity: 0.6;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #E0E0E0;
+    }
+
+    .beyond-badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #1A1A1A;
+      opacity: 0.5;
+      margin-bottom: 8px;
     }
 
     /* Sections */
@@ -864,9 +894,27 @@
         </div>
 
         <div class="mockup-dashboard">
-          <div class="mockup-dashboard-header">Beyond the Curriculum</div>
+          <div class="mockup-dashboard-header">The Career &amp; Admissions Pipeline</div>
           <div class="beyond-grid">
+            <div class="beyond-card essay-card essay-first">
+              <div class="beyond-badge">For students who enroll soon</div>
+              <div class="beyond-card-title">College Essay Review</div>
+              <div class="beyond-visual">
+                <div class="essay-flow">
+                  <span class="essay-flow-step">Draft</span>
+                  <span class="essay-flow-arrow">→</span>
+                  <span class="essay-flow-step">Founder feedback</span>
+                  <span class="essay-flow-arrow">→</span>
+                  <span class="essay-flow-step">Spike Verified</span>
+                </div>
+                <div class="essay-snippet before"><strong>Before:</strong> "I did a project with AI."</div>
+                <div class="essay-snippet after"><strong>After:</strong> "I built an AI tool that helped 200 students—here's what I learned about product and users."</div>
+              </div>
+              <p class="beyond-tell">Mentors who have shipped teach you how to frame real projects for admissions.</p>
+              <div class="beyond-footer">Our mentors have successfully guided students into Stanford, MIT, and Ivy League programs.</div>
+            </div>
             <div class="beyond-card">
+              <div class="beyond-badge">Exclusive for exceptional graduates</div>
               <div class="beyond-card-title">Private Network</div>
               <div class="beyond-visual">
                 <div class="network-nodes">
@@ -876,23 +924,9 @@
                   <span class="network-node">Startups</span>
                   <span class="network-node">Alumni</span>
                 </div>
+                <p class="beyond-dimmed">Direct access to early-stage founders in FinTech, EdTech, and DevTools.</p>
               </div>
-              <p class="beyond-tell">Alumni and partners recruit directly from Semperr. Internships, research spots, and project intros—not public job boards.</p>
-            </div>
-            <div class="beyond-card">
-              <div class="beyond-card-title">College Essay Review</div>
-              <div class="beyond-visual">
-                <div class="essay-flow">
-                  <span class="essay-flow-step">Draft</span>
-                  <span class="essay-flow-arrow">→</span>
-                  <span class="essay-flow-step">Founder feedback</span>
-                  <span class="essay-flow-arrow">→</span>
-                  <span class="essay-flow-step">Admissions-ready</span>
-                </div>
-                <div class="essay-snippet before"><strong>Before:</strong> "I did a project with AI."</div>
-                <div class="essay-snippet after"><strong>After:</strong> "I built an AI tool that helped 200 students—here's what I learned about product and users."</div>
-              </div>
-              <p class="beyond-tell">Mentors who have shipped teach you how to frame real projects for admissions.</p>
+              <p class="beyond-tell">Exceptional students who complete the course get vetted intros. Not public job boards—direct lines to founders who hire from Semperr.</p>
             </div>
           </div>
         </div>
