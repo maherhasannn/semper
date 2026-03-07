@@ -490,13 +490,19 @@
     }
 
     .trust-logos {
-      font-size: 15px;
-      font-weight: 600;
-      color: #1A1A1A;
-      opacity: 0.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
     }
 
-    .trust-logos span { margin: 0 12px; }
+    .trust-logo {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.6;
+    }
 
     /* Pillars - single column list */
     .pillar {
@@ -679,9 +685,10 @@
     }
 
     .capital-logo {
-      font-size: 18px;
-      font-weight: 600;
-      color: #1A1A1A;
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.9;
     }
 
     .capital-desc {
@@ -879,7 +886,11 @@
     <section class="trust">
       <div class="trust-label">Trusted by students accepted to</div>
       <div class="trust-logos">
-        <span>Stanford</span><span>MIT</span><span>Harvard</span><span>Berkeley</span><span>Yale</span>
+        <img src="https://logo.clearbit.com/stanford.edu" alt="Stanford" class="trust-logo" height="28" loading="lazy">
+        <img src="https://logo.clearbit.com/mit.edu" alt="MIT" class="trust-logo" height="28" loading="lazy">
+        <img src="https://logo.clearbit.com/harvard.edu" alt="Harvard" class="trust-logo" height="28" loading="lazy">
+        <img src="https://logo.clearbit.com/berkeley.edu" alt="Berkeley" class="trust-logo" height="28" loading="lazy">
+        <img src="https://logo.clearbit.com/yale.edu" alt="Yale" class="trust-logo" height="28" loading="lazy">
       </div>
     </section>
 
@@ -887,9 +898,9 @@
       <h2 class="capital-heading">Capital Infrastructure</h2>
       <div class="capital-value">$<span id="capital-count">0</span>+ Unlock</div>
       <div class="capital-logos">
-        <span class="capital-logo">Microsoft</span>
-        <span class="capital-logo">AWS</span>
-        <span class="capital-logo">GitHub</span>
+        <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" class="capital-logo" height="32" loading="lazy">
+        <img src="https://logo.clearbit.com/aws.amazon.com" alt="AWS" class="capital-logo" height="32" loading="lazy">
+        <img src="https://logo.clearbit.com/github.com" alt="GitHub" class="capital-logo" height="32" loading="lazy">
       </div>
       <p class="capital-desc">By Week 2, our students have access to the same compute credits and software grants as a seed-funded YC startup. Azure, OpenAI, and enterprise tools—no equity exchanged.</p>
     </section>
