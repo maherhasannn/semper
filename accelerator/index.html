@@ -361,7 +361,7 @@
 
     .mockup-dashboard-desc:last-child { margin-bottom: 0; }
 
-    /* Career & Admissions Pipeline - visual blocks */
+    /* The Founder's Edge - visual blocks */
     .beyond-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -428,20 +428,33 @@
     .essay-flow {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 4px;
+      font-size: 11px;
       color: #1A1A1A;
       margin-bottom: 12px;
+      letter-spacing: 0.02em;
     }
 
     .essay-flow-step {
-      padding: 6px 10px;
+      padding: 4px 8px;
       border: 1px solid #E0E0E0;
     }
 
     .essay-flow-arrow {
-      font-size: 14px;
+      font-size: 10px;
       opacity: 0.5;
+    }
+
+    .beyond-achievement-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1A1A1A;
+      padding: 4px 8px;
+      border: 1px solid #1A1A1A;
+      margin-bottom: 12px;
     }
 
     .essay-snippet {
@@ -480,6 +493,16 @@
       color: #1A1A1A;
       opacity: 0.5;
       margin-bottom: 8px;
+    }
+
+    .beyond-intro {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1A1A1A;
+      padding: 16px 20px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      border-bottom: 1px solid #E0E0E0;
     }
 
     /* Sections */
@@ -894,11 +917,11 @@
         </div>
 
         <div class="mockup-dashboard">
-          <div class="mockup-dashboard-header">The Career &amp; Admissions Pipeline</div>
+          <div class="mockup-dashboard-header">The Founder's Edge</div>
+          <p class="beyond-intro">Enrollment in the Summer 2026 cohort includes two high-stakes advantages designed to bridge the gap between building and admissions:</p>
           <div class="beyond-grid">
             <div class="beyond-card essay-card essay-first">
-              <div class="beyond-badge">For students who enroll soon</div>
-              <div class="beyond-card-title">College Essay Review</div>
+              <div class="beyond-card-title">Manual App Review</div>
               <div class="beyond-visual">
                 <div class="essay-flow">
                   <span class="essay-flow-step">Draft</span>
@@ -910,12 +933,12 @@
                 <div class="essay-snippet before"><strong>Before:</strong> "I did a project with AI."</div>
                 <div class="essay-snippet after"><strong>After:</strong> "I built an AI tool that helped 200 students—here's what I learned about product and users."</div>
               </div>
-              <p class="beyond-tell">Mentors who have shipped teach you how to frame real projects for admissions.</p>
+              <p class="beyond-tell">Every enrolled student receives a 1-on-1 technical audit of their Common App essay to ensure their AI project is framed as a high-impact "Spike".</p>
               <div class="beyond-footer">Our mentors have successfully guided students into Stanford, MIT, and Ivy League programs.</div>
             </div>
             <div class="beyond-card">
-              <div class="beyond-badge">Exclusive for exceptional graduates</div>
-              <div class="beyond-card-title">Private Network</div>
+              <span class="beyond-achievement-tag">Achievement Unlocked</span>
+              <div class="beyond-card-title">The Private Network</div>
               <div class="beyond-visual">
                 <div class="network-nodes">
                   <span class="network-node you">You</span>
@@ -926,7 +949,7 @@
                 </div>
                 <p class="beyond-dimmed">Direct access to early-stage founders in FinTech, EdTech, and DevTools.</p>
               </div>
-              <p class="beyond-tell">Exceptional students who complete the course get vetted intros. Not public job boards—direct lines to founders who hire from Semperr.</p>
+              <p class="beyond-tell">Access to our internal database of internships and research roles is reserved for students who demonstrate exceptional execution during the program. We only introduce founders to founders.</p>
             </div>
           </div>
         </div>
