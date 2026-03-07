@@ -856,7 +856,7 @@
 
         <div class="mockup-dashboard">
           <div class="mockup-dashboard-header">The Founder's Edge</div>
-          <p class="founders-edge-intro">Enrollment in the Summer 2026 cohort includes two high-stakes advantages designed to bridge the gap between building and admissions:</p>
+          <p class="founders-edge-intro">Enrollment in the Spring 2026 cohort includes two high-stakes advantages designed to bridge the gap between building and admissions:</p>
           <div class="founders-edge-list">
             <details class="founders-edge-item">
               <summary>Manual App Review</summary>
@@ -885,7 +885,7 @@
 
     <section class="capital-section" id="capital">
       <h2 class="capital-heading">Capital Infrastructure</h2>
-      <div class="capital-value">$205,240+ Unlock</div>
+      <div class="capital-value">$<span id="capital-count">0</span>+ Unlock</div>
       <div class="capital-logos">
         <span class="capital-logo">Microsoft</span>
         <span class="capital-logo">AWS</span>
@@ -1160,6 +1160,48 @@
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
       if (modal) modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
       document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+    })();
+
+    (function() {
+      var capitalSection = document.getElementById('capital');
+      var capitalCount = document.getElementById('capital-count');
+      var target = 205240;
+      var duration = 2000;
+      var hasAnimated = false;
+
+      function formatNumber(n) {
+        return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function animateCapital() {
+        if (!capitalCount || hasAnimated) return;
+        hasAnimated = true;
+        var start = performance.now();
+        function tick(now) {
+          var elapsed = now - start;
+          var t = Math.min(elapsed / duration, 1);
+          var eased = easeOutCubic(t);
+          var current = Math.round(eased * target);
+          capitalCount.textContent = formatNumber(current);
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      if (capitalSection && capitalCount && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) animateCapital();
+          });
+        }, { threshold: 0.3 });
+        io.observe(capitalSection);
+      } else if (capitalSection && capitalCount) {
+        animateCapital();
+      }
     })();
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
