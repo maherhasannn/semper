@@ -110,20 +110,143 @@
 
     .hero-subtitle:last-of-type { margin-bottom: 32px; }
 
-    /* Screenshots - raw, no frames */
+    /* Screenshots / Mockups */
     .screenshots {
       margin: 48px 0;
+      text-align: left;
     }
 
-    .screenshots img {
-      display: block;
+    .screenshots > div {
+      margin-bottom: 32px;
+    }
+
+    .screenshots > div:last-child { margin-bottom: 0; }
+
+    /* AI Tool Mockup */
+    .mockup-ai {
       width: 100%;
       max-width: 800px;
-      margin: 0 auto 24px;
+      margin: 0 auto;
       border: 1px solid #D1D1D1;
+      background: #fff;
     }
 
-    .screenshots img:last-child { margin-bottom: 0; }
+    .mockup-ai-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid #D1D1D1;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+
+    .mockup-ai-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #1A1A1A;
+      opacity: 0.6;
+      margin-bottom: 4px;
+    }
+
+    .mockup-ai-block {
+      padding: 16px 20px;
+      border-bottom: 1px solid #D1D1D1;
+    }
+
+    .mockup-ai-block:last-child { border-bottom: none; }
+
+    .mockup-ai-input {
+      font-size: 14px;
+      color: #1A1A1A;
+      opacity: 0.7;
+    }
+
+    .mockup-ai-response {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1A1A1A;
+      background: #F6F6EF;
+    }
+
+    /* Dashboard Mockup */
+    .mockup-dashboard {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border: 1px solid #D1D1D1;
+      background: #fff;
+    }
+
+    .mockup-dashboard-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #D1D1D1;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+
+    .mockup-dashboard-block {
+      padding: 16px 20px;
+      border-bottom: 1px solid #D1D1D1;
+    }
+
+    .mockup-dashboard-block:last-child { border-bottom: none; }
+
+    .mockup-dashboard-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 8px;
+    }
+
+    .mockup-dashboard-progress {
+      font-size: 14px;
+      color: #1A1A1A;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .mockup-dashboard-bar {
+      height: 4px;
+      background: #D1D1D1;
+      width: 100%;
+    }
+
+    .mockup-dashboard-bar-fill {
+      height: 100%;
+      width: 25%;
+      background: #1A1A1A;
+    }
+
+    .mockup-dashboard-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+      color: #1A1A1A;
+    }
+
+    .mockup-dashboard-item + .mockup-dashboard-item {
+      border-top: 1px solid #F6F6EF;
+    }
+
+    .mockup-dashboard-check::before {
+      content: "✓ ";
+      font-weight: 600;
+    }
+    .mockup-dashboard-item.locked { opacity: 0.5; }
+    .mockup-dashboard-item.current { font-weight: 600; }
+
+    .mockup-dashboard-next {
+      font-size: 13px;
+      color: #1A1A1A;
+      opacity: 0.8;
+    }
 
     /* Sections */
     .section {
@@ -436,8 +559,38 @@
       <a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>
 
       <div class="screenshots">
-        <img src="../images/accelerator/ai-tool-screenshot.png" alt="AI tool interface" width="800" height="450">
-        <img src="../images/accelerator/student-dashboard.png" alt="Student dashboard" width="800" height="450">
+        <div class="mockup-ai">
+          <div class="mockup-ai-header">
+            <span>Claude</span>
+            <span style="font-size: 11px; font-weight: 500; opacity: 0.6;">Prompt Engineering · Week 1</span>
+          </div>
+          <div class="mockup-ai-block">
+            <div class="mockup-ai-label">Your prompt</div>
+            <div class="mockup-ai-input">Refine this prompt for better output: "Summarize the article"</div>
+          </div>
+          <div class="mockup-ai-block mockup-ai-response">
+            <div class="mockup-ai-label">Response</div>
+            <p style="margin: 0;">Add structure: specify length, tone, and key points to extract. Try: "Summarize in 3 bullet points. Tone: professional. Include: main argument, supporting evidence, conclusion."</p>
+          </div>
+        </div>
+        <div class="mockup-dashboard">
+          <div class="mockup-dashboard-header">Semperr Accelerator — Your Progress</div>
+          <div class="mockup-dashboard-block">
+            <div class="mockup-dashboard-title">Progress</div>
+            <div class="mockup-dashboard-progress">Week 2 of 8</div>
+            <div class="mockup-dashboard-bar"><div class="mockup-dashboard-bar-fill"></div></div>
+          </div>
+          <div class="mockup-dashboard-block">
+            <div class="mockup-dashboard-title">Modules</div>
+            <div class="mockup-dashboard-item mockup-dashboard-check">Week 1–2: AI Foundations &amp; Prompt Engineering</div>
+            <div class="mockup-dashboard-item current">Week 3–4: Automation &amp; Workflow Integration</div>
+            <div class="mockup-dashboard-item locked">Week 5–6: AI-Powered Development</div>
+            <div class="mockup-dashboard-item locked">Week 7–8: Capstone Project &amp; Portfolio</div>
+          </div>
+          <div class="mockup-dashboard-block">
+            <div class="mockup-dashboard-next">Next up: Build your first automation with Make.com</div>
+          </div>
+        </div>
       </div>
     </section>
 
