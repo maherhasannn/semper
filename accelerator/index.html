@@ -122,6 +122,17 @@
 
     .screenshots > div:last-child { margin-bottom: 0; }
 
+    /* Quiz Section - visually pronounced */
+    .quiz-section {
+      margin: 48px 0 32px;
+      padding: 32px 24px;
+      border: 2px solid #1A1A1A;
+      background: #fff;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     /* Quiz Trigger */
     .mockup-quiz {
       width: 100%;
@@ -134,23 +145,24 @@
 
     .mockup-quiz:hover {
       border-color: #1A1A1A;
+      background: #F6F6EF;
     }
 
     .mockup-quiz-inner {
-      padding: 24px 20px;
+      padding: 28px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .mockup-quiz-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
       color: #1A1A1A;
     }
 
     .mockup-quiz-hint {
-      font-size: 13px;
+      font-size: 14px;
       color: #1A1A1A;
       opacity: 0.6;
     }
@@ -168,10 +180,18 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
+      opacity: 0;
     }
 
     .quiz-modal.open {
       display: flex;
+      opacity: 1;
+      animation: quizOverlayIn 0.2s ease-out forwards;
+    }
+
+    @keyframes quizOverlayIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .quiz-modal-box {
@@ -182,6 +202,17 @@
       background: #F6F6EF;
       border: 1px solid #D1D1D1;
       padding: 0;
+      transform: scale(0.95);
+      animation: quizBoxIn 0.25s ease-out forwards;
+    }
+
+    .quiz-modal.open .quiz-modal-box {
+      animation: quizBoxIn 0.25s ease-out forwards;
+    }
+
+    @keyframes quizBoxIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     .quiz-modal-header {
@@ -245,6 +276,41 @@
 
     .quiz-question-options input {
       margin-right: 10px;
+    }
+
+    .quiz-submit {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      background: #000;
+      color: #fff;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 24px;
+    }
+
+    .quiz-result {
+      display: none;
+      padding-top: 8px;
+    }
+
+    .quiz-result.show {
+      display: block;
+    }
+
+    .quiz-result-message {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #1A1A1A;
+      margin-bottom: 16px;
+    }
+
+    .quiz-result .btn-apply,
+    .quiz-result .btn-secondary {
+      margin-right: 12px;
+      margin-bottom: 8px;
     }
 
     /* Dashboard Mockup */
@@ -643,10 +709,12 @@
       <a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>
 
       <div class="screenshots">
-        <div class="mockup-quiz" id="quiz-trigger">
-          <div class="mockup-quiz-inner">
-            <span class="mockup-quiz-title">Is Semperr right for you?</span>
-            <span class="mockup-quiz-hint">Answer a few questions →</span>
+        <div class="quiz-section">
+          <div class="mockup-quiz" id="quiz-trigger">
+            <div class="mockup-quiz-inner">
+              <span class="mockup-quiz-title">Is Semperr right for you?</span>
+              <span class="mockup-quiz-hint">Answer a few questions →</span>
+            </div>
           </div>
         </div>
 
@@ -657,35 +725,41 @@
               <button type="button" class="quiz-modal-close" id="quiz-modal-close" aria-label="Close">&times;</button>
             </div>
             <div class="quiz-modal-body">
-              <div class="quiz-question">
-                <label class="quiz-question-label">Are you a high school student?</label>
-                <div class="quiz-question-options">
-                  <label><input type="radio" name="q1" value="yes"> Yes</label>
-                  <label><input type="radio" name="q1" value="no"> No</label>
+              <div id="quiz-questions">
+                <div class="quiz-question">
+                  <label class="quiz-question-label">Are you a high school student?</label>
+                  <div class="quiz-question-options">
+                    <label><input type="radio" name="q1" value="yes"> Yes</label>
+                    <label><input type="radio" name="q1" value="no"> No</label>
+                  </div>
                 </div>
-              </div>
-              <div class="quiz-question">
-                <label class="quiz-question-label">Do you want to build real AI projects, not just watch tutorials?</label>
-                <div class="quiz-question-options">
-                  <label><input type="radio" name="q2" value="yes"> Yes</label>
-                  <label><input type="radio" name="q2" value="no"> No</label>
+                <div class="quiz-question">
+                  <label class="quiz-question-label">Do you want to build real AI projects, not just watch tutorials?</label>
+                  <div class="quiz-question-options">
+                    <label><input type="radio" name="q2" value="yes"> Yes</label>
+                    <label><input type="radio" name="q2" value="no"> No</label>
+                  </div>
                 </div>
-              </div>
-              <div class="quiz-question">
-                <label class="quiz-question-label">Are you applying to college in the next 1–2 years?</label>
-                <div class="quiz-question-options">
-                  <label><input type="radio" name="q3" value="yes"> Yes</label>
-                  <label><input type="radio" name="q3" value="no"> No</label>
+                <div class="quiz-question">
+                  <label class="quiz-question-label">Are you applying to college in the next 1–2 years?</label>
+                  <div class="quiz-question-options">
+                    <label><input type="radio" name="q3" value="yes"> Yes</label>
+                    <label><input type="radio" name="q3" value="no"> No</label>
+                  </div>
                 </div>
-              </div>
-              <div class="quiz-question">
-                <label class="quiz-question-label">Would you benefit from 1-on-1 mentorship?</label>
-                <div class="quiz-question-options">
-                  <label><input type="radio" name="q4" value="yes"> Yes</label>
-                  <label><input type="radio" name="q4" value="no"> No</label>
+                <div class="quiz-question">
+                  <label class="quiz-question-label">Would you benefit from 1-on-1 mentorship?</label>
+                  <div class="quiz-question-options">
+                    <label><input type="radio" name="q4" value="yes"> Yes</label>
+                    <label><input type="radio" name="q4" value="no"> No</label>
+                  </div>
                 </div>
+                <button type="button" class="quiz-submit" id="quiz-submit">Get my result</button>
               </div>
-              <a href="../edu/ai-advantage/apply/" class="btn-apply" style="display: inline-block; margin-top: 16px;">Apply</a>
+              <div id="quiz-result" class="quiz-result">
+                <p class="quiz-result-message" id="quiz-result-message"></p>
+                <div id="quiz-result-cta"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -930,11 +1004,66 @@
     (function() {
       var trigger = document.getElementById('quiz-trigger');
       var modal = document.getElementById('quiz-modal');
-      var close = document.getElementById('quiz-modal-close');
-      function openModal() { if (modal) modal.classList.add('open'); }
-      function closeModal() { if (modal) modal.classList.remove('open'); }
+      var closeBtn = document.getElementById('quiz-modal-close');
+      var submitBtn = document.getElementById('quiz-submit');
+      var questionsEl = document.getElementById('quiz-questions');
+      var resultEl = document.getElementById('quiz-result');
+      var resultMessage = document.getElementById('quiz-result-message');
+      var resultCta = document.getElementById('quiz-result-cta');
+
+      function openModal() {
+        if (!modal) return;
+        questionsEl.style.display = 'block';
+        resultEl.classList.remove('show');
+        resultEl.style.display = 'none';
+        var radios = modal.querySelectorAll('input[type="radio"]');
+        radios.forEach(function(r) { r.checked = false; });
+        modal.classList.add('open');
+      }
+
+      function closeModal() {
+        if (modal) modal.classList.remove('open');
+      }
+
+      function countYes() {
+        var yes = 0;
+        for (var i = 1; i <= 4; i++) {
+          var checked = modal.querySelector('input[name="q' + i + '"]:checked');
+          if (checked && checked.value === 'yes') yes++;
+        }
+        return yes;
+      }
+
+      function allAnswered() {
+        for (var i = 1; i <= 4; i++) {
+          if (!modal.querySelector('input[name="q' + i + '"]:checked')) return false;
+        }
+        return true;
+      }
+
+      if (submitBtn) {
+        submitBtn.addEventListener('click', function() {
+          if (!allAnswered()) {
+            alert('Please answer all questions.');
+            return;
+          }
+          var yesCount = countYes();
+          questionsEl.style.display = 'none';
+          resultEl.style.display = 'block';
+          resultEl.classList.add('show');
+
+          if (yesCount >= 3) {
+            resultMessage.textContent = 'Looks like a great fit. Semperr was designed for students like you.';
+            resultCta.innerHTML = '<a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>';
+          } else {
+            resultMessage.textContent = "We're not sure if Semperr is right for you. Would you like to learn more?";
+            resultCta.innerHTML = '<a href="../contact-us/" class="btn-secondary">Learn more</a>';
+          }
+        });
+      }
+
       if (trigger) trigger.addEventListener('click', openModal);
-      if (close) close.addEventListener('click', closeModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
       if (modal) modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
       document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
     })();
