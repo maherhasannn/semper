@@ -361,6 +361,97 @@
 
     .mockup-dashboard-desc:last-child { margin-bottom: 0; }
 
+    /* Beyond Curriculum - visual blocks */
+    .beyond-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    @media (max-width: 600px) {
+      .beyond-grid { grid-template-columns: 1fr; }
+    }
+
+    .beyond-card {
+      border: 2px solid #1A1A1A;
+      padding: 24px;
+      background: #fff;
+    }
+
+    .beyond-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #D1D1D1;
+    }
+
+    .beyond-visual {
+      margin-bottom: 16px;
+    }
+
+    .network-nodes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .network-node {
+      padding: 8px 12px;
+      border: 1px solid #1A1A1A;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+
+    .network-node.you {
+      border-width: 2px;
+      background: #1A1A1A;
+      color: #fff;
+    }
+
+    .essay-flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #1A1A1A;
+      margin-bottom: 12px;
+    }
+
+    .essay-flow-step {
+      padding: 6px 10px;
+      border: 1px solid #D1D1D1;
+    }
+
+    .essay-flow-arrow {
+      font-size: 14px;
+      opacity: 0.5;
+    }
+
+    .essay-snippet {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #1A1A1A;
+      padding: 12px;
+      border-left: 2px solid #D1D1D1;
+      margin-top: 8px;
+    }
+
+    .essay-snippet.before { opacity: 0.7; }
+    .essay-snippet.after { border-left-color: #1A1A1A; }
+
+    .beyond-tell {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #1A1A1A;
+      opacity: 0.9;
+    }
+
     /* Sections */
     .section {
       padding: 48px 0;
@@ -718,7 +809,7 @@
       <div class="hero-eyebrow">Cohort Spring 2026 — Now Accepting Applications</div>
       <h1>Build an AI startup. Get your first revenue. Get into your dream college.</h1>
       <p class="hero-subtitle">
-        An 8-week intensive for ambitious high schoolers. Learn from founders who have shipped. Build real products. Stand out in admissions.
+        An 8-week intensive accelerator for ambitious high schoolers. Learn from founders who have built and sold companies. Build real products. Stand out in admissions.
       </p>
       <div class="hero-cta">
         <a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>
@@ -774,13 +865,35 @@
 
         <div class="mockup-dashboard">
           <div class="mockup-dashboard-header">Beyond the Curriculum</div>
-          <div class="mockup-dashboard-block">
-            <div class="mockup-dashboard-title">Private Network</div>
-            <p class="mockup-dashboard-desc">Access our private network of opportunities: internships, research positions, and early-stage project partnerships. Connect with alumni and industry partners who actively recruit from Semperr.</p>
-          </div>
-          <div class="mockup-dashboard-block">
-            <div class="mockup-dashboard-title">College Essay Review</div>
-            <p class="mockup-dashboard-desc">Get your college essays reviewed by mentors who understand how to frame AI and tech experience for admissions. Stand out with a narrative that showcases real projects and concrete impact.</p>
+          <div class="beyond-grid">
+            <div class="beyond-card">
+              <div class="beyond-card-title">Private Network</div>
+              <div class="beyond-visual">
+                <div class="network-nodes">
+                  <span class="network-node you">You</span>
+                  <span class="network-node">Internships</span>
+                  <span class="network-node">Research</span>
+                  <span class="network-node">Startups</span>
+                  <span class="network-node">Alumni</span>
+                </div>
+              </div>
+              <p class="beyond-tell">Alumni and partners recruit directly from Semperr. Internships, research spots, and project intros—not public job boards.</p>
+            </div>
+            <div class="beyond-card">
+              <div class="beyond-card-title">College Essay Review</div>
+              <div class="beyond-visual">
+                <div class="essay-flow">
+                  <span class="essay-flow-step">Draft</span>
+                  <span class="essay-flow-arrow">→</span>
+                  <span class="essay-flow-step">Founder feedback</span>
+                  <span class="essay-flow-arrow">→</span>
+                  <span class="essay-flow-step">Admissions-ready</span>
+                </div>
+                <div class="essay-snippet before"><strong>Before:</strong> "I did a project with AI."</div>
+                <div class="essay-snippet after"><strong>After:</strong> "I built an AI tool that helped 200 students—here's what I learned about product and users."</div>
+              </div>
+              <p class="beyond-tell">Mentors who have shipped teach you how to frame real projects for admissions.</p>
+            </div>
           </div>
         </div>
       </div>
