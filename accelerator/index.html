@@ -110,6 +110,14 @@
 
     .hero-subtitle:last-of-type { margin-bottom: 32px; }
 
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
     /* Screenshots / Mockups */
     .screenshots {
       margin: 48px 0;
@@ -121,51 +129,6 @@
     }
 
     .screenshots > div:last-child { margin-bottom: 0; }
-
-    /* Quiz Section - visually pronounced */
-    .quiz-section {
-      margin: 48px 0 32px;
-      padding: 32px 24px;
-      border: 2px solid #1A1A1A;
-      background: #fff;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Quiz Trigger */
-    .mockup-quiz {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      border: 1px solid #D1D1D1;
-      background: #fff;
-      cursor: pointer;
-    }
-
-    .mockup-quiz:hover {
-      border-color: #1A1A1A;
-      background: #F6F6EF;
-    }
-
-    .mockup-quiz-inner {
-      padding: 28px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .mockup-quiz-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #1A1A1A;
-    }
-
-    .mockup-quiz-hint {
-      font-size: 14px;
-      color: #1A1A1A;
-      opacity: 0.6;
-    }
 
     /* Quiz Modal */
     .quiz-modal {
@@ -757,18 +720,12 @@
       <p class="hero-subtitle">
         An 8-week intensive for ambitious high schoolers. Learn from founders who have shipped. Build real products. Stand out in admissions.
       </p>
-      <a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>
+      <div class="hero-cta">
+        <a href="../edu/ai-advantage/apply/" class="btn-apply">Apply</a>
+        <button type="button" class="btn-secondary" id="quiz-trigger">Is Semperr right for you?</button>
+      </div>
 
       <div class="screenshots">
-        <div class="quiz-section">
-          <div class="mockup-quiz" id="quiz-trigger">
-            <div class="mockup-quiz-inner">
-              <span class="mockup-quiz-title">Is Semperr right for you?</span>
-              <span class="mockup-quiz-hint">Answer a few questions →</span>
-            </div>
-          </div>
-        </div>
-
         <div id="quiz-modal" class="quiz-modal">
           <div class="quiz-modal-box">
             <div class="quiz-modal-header">
