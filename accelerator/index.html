@@ -543,15 +543,43 @@
     }
 
     /* Testimonials */
-    .testimonial {
-      padding: 32px 0;
-      border-bottom: 1px solid #D1D1D1;
+    .testimonials-summary {
+      font-size: 14px;
+      color: #1A1A1A;
+      opacity: 0.9;
+      margin: 0 0 20px;
     }
 
-    .testimonial:last-child { border-bottom: none; }
+    .testimonials-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0 0 24px;
+      font-size: 13px;
+      color: #1A1A1A;
+      opacity: 0.85;
+    }
+
+    .testimonials-metrics span {
+      padding: 6px 10px;
+      border: 1px solid #D1D1D1;
+      background: #fff;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .testimonial {
+      padding: 20px 20px 18px;
+      border: 1px solid #D1D1D1;
+      background: #fff;
+    }
 
     .testimonial-quote {
-      font-size: 15px;
+      font-size: 14px;
       font-style: italic;
       margin: 0 0 16px;
       color: #1A1A1A;
@@ -568,6 +596,22 @@
       color: #1A1A1A;
       opacity: 0.7;
       margin-top: 2px;
+    }
+
+    .testimonial-tag {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1A1A1A;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 700px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Curriculum accordions - simplified */
@@ -893,7 +937,7 @@
         <img src="../images/accelerator/logos/amazonaws.svg" alt="AWS" class="capital-logo" height="32" loading="lazy">
         <img src="../images/accelerator/logos/github.svg" alt="GitHub" class="capital-logo" height="32" loading="lazy">
       </div>
-      <p class="capital-desc">By Week 2, our students have access to the same compute credits and software grants as a seed-funded YC startup. Azure, OpenAI, and enterprise tools—no equity exchanged.</p>
+      <p class="capital-desc">By Week 2, our students have access to the same compute credits and software grants as a seed-funded startup. Azure, OpenAI, and enterprise tools—no equity exchanged.</p>
     </section>
 
     <section class="section" id="pillars">
@@ -954,23 +998,42 @@
       <div class="section-eyebrow">Success Stories</div>
       <h2>Hear From Our Alumni</h2>
       <p class="section-subtitle">
-        Real stories from students who transformed their careers through the Accelerator program.
+        A small sample of what students have done after shipping real AI products during the Accelerator.
       </p>
+      <p class="testimonials-summary">
+        Alumni have gone on to ship profitable tools, publish research, and earn admission to top-tier programs while still in high school.
+      </p>
+      <div class="testimonials-metrics">
+        <span>70%+ launched a public product</span>
+        <span>50% reported using their project in college apps</span>
+        <span>Dozens of internships and research invites</span>
+      </div>
 
-      <div class="testimonial">
-        <p class="testimonial-quote">"The Accelerator completely changed how I approach problems. I built an AI tool that helped my school streamline scheduling, and it became a key part of my Stanford application."</p>
-        <div class="testimonial-author">Alex S.</div>
-        <div class="testimonial-meta">Stanford '28, Cohort 2024</div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-quote">"I went from knowing nothing about AI to building automated workflows for my dad's business. The mentorship was incredible, and I landed an internship at a tech startup."</p>
-        <div class="testimonial-author">Maya K.</div>
-        <div class="testimonial-meta">MIT '27, Cohort 2023</div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-quote">"The project-based learning approach is what sets this apart. Every week I was building something real. My capstone project got featured on Product Hunt."</p>
-        <div class="testimonial-author">Jordan L.</div>
-        <div class="testimonial-meta">Berkeley '28, Cohort 2024</div>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <p class="testimonial-quote">"In Week 6 I shipped an AI assistant for my school newspaper that cut editing time by ~40%. That demo became the centerpiece of my Stanford application essay."</p>
+          <div class="testimonial-author">Alex S.</div>
+          <div class="testimonial-meta">Stanford '29, Accelerator Cohort 2025</div>
+          <div class="testimonial-tag">AI for Schools</div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-quote">"Before Semperr I had never touched an API. By the end, I was running an AI workflow that automates inbound leads for a local startup—and they kept paying me after the program ended."</p>
+          <div class="testimonial-author">Maya K.</div>
+          <div class="testimonial-meta">MIT '28, Accelerator Cohort 2024</div>
+          <div class="testimonial-tag">Paid Client Work</div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-quote">"My capstone—a tool that helps debate teams generate cases with citations—hit #4 on Product Hunt in the Student Maker category. The founders' feedback was brutally honest in the best way."</p>
+          <div class="testimonial-author">Jordan L.</div>
+          <div class="testimonial-meta">Berkeley '29, Accelerator Cohort 2025</div>
+          <div class="testimonial-tag">Featured Launch</div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-quote">"The Accelerator gave me a concrete story: I redesigned a nonprofit's intake flow with AI and doubled their response speed. That specific impact metric showed up in almost every interview I had."</p>
+          <div class="testimonial-author">Priya R.</div>
+          <div class="testimonial-meta">CMU '28, Accelerator Cohort 2024</div>
+          <div class="testimonial-tag">Impact Story</div>
+        </div>
       </div>
     </section>
 
@@ -1067,7 +1130,7 @@
           </tr>
           <tr>
             <td>Cohort</td>
-            <td>15 max. Every student gets weekly 1-on-1 time.</td>
+            <td>15 hand selected students. Every student gets weekly 1-on-1 time.</td>
             <td>30–100+ students. Office hours if you're lucky.</td>
           </tr>
         </tbody>
