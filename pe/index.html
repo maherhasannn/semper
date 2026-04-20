@@ -434,7 +434,7 @@
 <!-- Top bar -->
 <header class="bar">
   <a href="#" class="mark"><span class="dot"></span>Semperr</a>
-  <span class="status"><span class="pulse"></span>System nominal · UTC 14:08</span>
+  <span class="status"><span class="pulse"></span>System nominal · UTC <span id="utcTime">--:--</span></span>
 </header>
 
 <!-- Progress rail -->
@@ -1108,6 +1108,19 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
       el.scrollIntoView({ behavior:'smooth', block:'start' });
     });
   });
+})();
+</script>
+
+<script>
+(function(){
+  function updateUTC(){
+    const now = new Date();
+    const h = String(now.getUTCHours()).padStart(2,'0');
+    const m = String(now.getUTCMinutes()).padStart(2,'0');
+    document.getElementById('utcTime').textContent = h + ':' + m;
+  }
+  updateUTC();
+  setInterval(updateUTC, 1000);
 })();
 </script>
 
