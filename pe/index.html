@@ -50,22 +50,13 @@
     background:var(--accent);
     box-shadow:0 0 12px var(--accent-dim);
   }
-  .status{
+  .login{
     pointer-events:auto;
-    font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;
     color:var(--fg-3);text-transform:uppercase;
-    display:inline-flex;align-items:center;gap:10px;
+    transition:color .3s var(--ease);
   }
-  .status .pulse{
-    width:6px;height:6px;border-radius:50%;background:#48D597;
-    box-shadow:0 0 0 0 rgba(72,213,151,.5);
-    animation:pulse 2.8s var(--ease-io) infinite;
-  }
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(72,213,151,.45)}
-    70%{box-shadow:0 0 0 8px rgba(72,213,151,0)}
-    100%{box-shadow:0 0 0 0 rgba(72,213,151,0)}
-  }
+  .login:hover{color:var(--fg)}
 
   /* ---------- Pinned scene stage ---------- */
   .stage{
@@ -434,7 +425,7 @@
 <!-- Top bar -->
 <header class="bar">
   <a href="#" class="mark"><span class="dot"></span>Semperr</a>
-  <span class="status"><span class="pulse"></span>System nominal · UTC <span id="utcTime">--:--</span></span>
+  <a href="#" class="login">Client Login</a>
 </header>
 
 <!-- Progress rail -->
@@ -1108,19 +1099,6 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
       el.scrollIntoView({ behavior:'smooth', block:'start' });
     });
   });
-})();
-</script>
-
-<script>
-(function(){
-  function updateUTC(){
-    const now = new Date();
-    const h = String(now.getUTCHours()).padStart(2,'0');
-    const m = String(now.getUTCMinutes()).padStart(2,'0');
-    document.getElementById('utcTime').textContent = h + ':' + m;
-  }
-  updateUTC();
-  setInterval(updateUTC, 1000);
 })();
 </script>
 
