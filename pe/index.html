@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Semperr — Signal exists. We make it visible.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    /* Tweakable */
+    --bg: #0B0D10;
+    --bg-2: #0E1115;
+    --fg: #E8EAEE;
+    --fg-2: #9AA0AA;
+    --fg-3: #5C626C;
+    --rule: #1A1E24;
+    --accent: #6B8CFF;
+    --accent-dim: rgba(107,140,255,0.32);
+
+    --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --ease-io: cubic-bezier(.65,0,.35,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+  body{overflow-x:hidden}
+
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* ---------- Top bar ---------- */
+  .bar{
+    position:fixed;inset:0 0 auto 0;height:64px;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;pointer-events:none;
+    mix-blend-mode: normal;
+  }
+  .mark{
+    pointer-events:auto;
+    font-weight:500;letter-spacing:-0.01em;font-size:15px;
+    display:inline-flex;align-items:center;gap:10px;color:var(--fg);
+  }
+  .mark .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 12px var(--accent-dim);
+  }
+  .status{
+    pointer-events:auto;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;
+    color:var(--fg-3);text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .status .pulse{
+    width:6px;height:6px;border-radius:50%;background:#48D597;
+    box-shadow:0 0 0 0 rgba(72,213,151,.5);
+    animation:pulse 2.8s var(--ease-io) infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(72,213,151,.45)}
+    70%{box-shadow:0 0 0 8px rgba(72,213,151,0)}
+    100%{box-shadow:0 0 0 0 rgba(72,213,151,0)}
+  }
+
+  /* ---------- Pinned scene stage ---------- */
+  .stage{
+    position:sticky;top:0;height:100vh;width:100%;
+    overflow:hidden;
+    z-index:1;
+  }
+  #field{
+    position:absolute;inset:0;width:100%;height:100%;
+    display:block;
+  }
+  /* vignette */
+  .stage::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%),
+      linear-gradient(to bottom, rgba(11,13,16,.2), transparent 20%, transparent 80%, rgba(11,13,16,.6));
+  }
+
+  /* scroll track defines total scroll length */
+  .track{position:relative;height:calc(100vh * 11);}
+  /* First viewport = hero; subsequent = scroll scenes */
+
+  /* ---------- Scene overlays ---------- */
+  .scenes{
+    position:absolute;inset:0;pointer-events:none;
+  }
+  .scene{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .9s var(--ease-io);
+    will-change:opacity,transform;
+  }
+  .scene.is-active{opacity:1}
+  .scene .inner{width:min(1080px, 92vw);padding:0 24px}
+
+  /* Eyebrow */
+  .eyebrow{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;
+    color:var(--fg-3);text-transform:uppercase;margin-bottom:28px;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:"";width:18px;height:1px;background:var(--fg-3);
+  }
+
+  /* Hero typography */
+  .h1{
+    font-weight:400;letter-spacing:-0.035em;
+    font-size: clamp(44px, 7.4vw, 104px);
+    line-height:0.98;color:var(--fg);
+    text-wrap:balance;
+  }
+  .h1 em{font-style:normal;color:var(--fg-2);font-weight:300}
+  .sub{
+    margin-top:28px;max-width:560px;
+    font-size: clamp(15px, 1.2vw, 17px);
+    color:var(--fg-2);line-height:1.55;font-weight:400;letter-spacing:-0.005em;
+    text-wrap:pretty;
+  }
+
+  /* CTA */
+  .cta-row{margin-top:44px;display:flex;gap:14px;align-items:center;pointer-events:auto}
+  .cta{
+    pointer-events:auto;
+    display:inline-flex;align-items:center;gap:12px;
+    padding:13px 18px 13px 20px;
+    border-radius:999px;
+    background:var(--fg);color:#0B0D10;
+    font-size:14px;font-weight:500;letter-spacing:-0.005em;
+    transition:transform .5s var(--ease), background .4s var(--ease), color .4s var(--ease);
+  }
+  .cta:hover{transform:translateY(-1px);background:#fff}
+  .cta .arrow{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--accent);position:relative;display:inline-block;
+  }
+  .cta .arrow::after{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(#0B0D10,#0B0D10) center/7px 1px no-repeat,
+      linear-gradient(#0B0D10,#0B0D10) 11px 5px/1px 7px no-repeat;
+    transform:rotate(-45deg);
+  }
+  .cta-ghost{
+    pointer-events:auto;color:var(--fg-2);font-size:13px;
+    padding:12px 14px;border-radius:999px;
+    border:1px solid var(--rule);
+    transition:color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .cta-ghost:hover{color:var(--fg);border-color:#2A3038}
+
+  /* Small caption for scroll scenes */
+  .caption{
+    font-weight:300;letter-spacing:-0.02em;
+    font-size: clamp(28px, 4.2vw, 56px);
+    line-height:1.04;color:var(--fg);max-width:820px;
+    text-wrap:balance;
+  }
+  .caption .accent{color:var(--accent)}
+
+  /* ---------- Deal cards ---------- */
+  .cards{
+    display:grid;grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:14px;max-width:1040px;margin:0 auto;
+    transform:translateY(6px);
+    align-items:stretch;
+  }
+  .card{
+    position:relative;
+    border:1px solid var(--rule);
+    background: linear-gradient(180deg, rgba(22,26,32,.55), rgba(14,17,21,.55));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding:18px 18px 16px;border-radius:6px;
+    opacity:0;transform:translateY(14px);
+    transition: opacity .9s var(--ease-io), transform .9s var(--ease-io);
+    /* Fixed row scaffold: head | name | sector | spacer | meta */
+    display:grid;
+    grid-template-rows: 14px 22px 18px 1fr auto;
+    gap:10px;
+    min-height:208px;
+  }
+  .scene-form.is-active .card{opacity:1;transform:translateY(0)}
+  .scene-form.is-active .card:nth-child(1){transition-delay:.05s}
+  .scene-form.is-active .card:nth-child(2){transition-delay:.18s}
+  .scene-form.is-active .card:nth-child(3){transition-delay:.31s}
+
+  .card-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin:0;
+  }
+  .card-id{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.08em;
+    color:var(--fg-3);text-transform:uppercase;
+  }
+  .card-score{
+    font-family:var(--font-mono);font-size:10.5px;color:var(--accent);
+    display:inline-flex;align-items:center;gap:10px;
+    position:relative;
+  }
+  .card-score .signal-slot{
+    width:10px;height:10px;border-radius:50%;
+    border:1px solid transparent;
+    transition: border-color .8s var(--ease);
+    display:inline-block;
+  }
+  .scene-form.is-active .card .signal-slot{
+    border-color: rgba(107,140,255,0.35);
+  }
+  .card-name{
+    font-size:17px;font-weight:500;letter-spacing:-0.015em;
+    line-height:1.1;margin:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .card-sector{
+    font-size:11.5px;color:var(--fg-2);
+    line-height:1.3;margin:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    letter-spacing:-0.005em;
+  }
+  .card-meta{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;
+    padding-top:14px;border-top:1px solid var(--rule);
+    margin:0;
+  }
+  .meta-k{
+    font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.1em;
+    color:var(--fg-3);text-transform:uppercase;margin-bottom:3px;
+  }
+  .meta-v{font-size:12.5px;color:var(--fg);font-variant-numeric:tabular-nums;letter-spacing:-0.005em}
+  .card-tag{
+    position:absolute;top:-18px;right:0;
+    font-family:var(--font-mono);font-size:9.5px;color:var(--fg-3);
+    letter-spacing:0.12em;text-transform:uppercase;
+  }
+
+  /* ---------- Trust strip (after pinned section) ---------- */
+  .after{
+    position:relative;z-index:2;background:var(--bg);
+    border-top:1px solid var(--rule);
+  }
+  .trust{
+    max-width:1200px;margin:0 auto;
+    padding: 120px 32px 80px;
+    display:grid;grid-template-columns: 1fr 1fr;gap:80px;
+    align-items:start;
+  }
+  .trust-lead{
+    font-size: clamp(24px, 2.4vw, 34px);
+    letter-spacing:-0.02em;line-height:1.15;font-weight:300;
+    color:var(--fg);text-wrap:balance;max-width:460px;
+  }
+  .trust-lead em{color:var(--fg-2);font-style:normal}
+  .trust-right{display:flex;flex-direction:column;gap:44px}
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+    padding-bottom:36px;border-bottom:1px solid var(--rule);
+  }
+  .stat-n{
+    font-size:34px;letter-spacing:-0.025em;font-weight:400;
+    font-variant-numeric:tabular-nums;color:var(--fg);
+  }
+  .stat-l{
+    margin-top:6px;font-size:12.5px;color:var(--fg-2);line-height:1.4;
+    max-width:180px;
+  }
+  .notes{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  }
+  .note{
+    font-size:13px;color:var(--fg-2);line-height:1.55;
+  }
+  .note b{color:var(--fg);font-weight:500;display:block;margin-bottom:6px;font-size:13px;letter-spacing:-0.005em}
+
+  /* ---------- Access form ---------- */
+  .access{
+    max-width:1200px;margin:0 auto;
+    padding: 120px 32px 160px;
+    display:grid;grid-template-columns: 1fr 1fr;gap:80px;align-items:end;
+    border-top:1px solid var(--rule);
+  }
+  .access h2{
+    font-size: clamp(36px, 5vw, 68px);
+    font-weight:300;letter-spacing:-0.03em;line-height:1.02;
+    color:var(--fg);max-width:520px;text-wrap:balance;
+  }
+  .access h2 em{font-style:normal;color:var(--fg-2)}
+  .form{
+    display:flex;flex-direction:column;gap:22px;max-width:460px;
+    justify-self:end;width:100%;
+  }
+  .field{
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .field label{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.12em;
+    color:var(--fg-3);text-transform:uppercase;
+  }
+  .field input, .field select{
+    font:inherit;color:var(--fg);background:transparent;
+    border:0;border-bottom:1px solid var(--rule);
+    padding:10px 0 10px;font-size:15px;letter-spacing:-0.005em;
+    outline:none;transition:border-color .3s var(--ease);
+    appearance:none;-webkit-appearance:none;
+    border-radius:0;
+  }
+  .field input:focus, .field select:focus{border-bottom-color:var(--accent)}
+  .field input::placeholder{color:var(--fg-3)}
+  .submit{
+    margin-top:10px;align-self:flex-start;
+    display:inline-flex;align-items:center;gap:14px;
+    padding:14px 22px;border-radius:999px;
+    background:var(--fg);color:#0B0D10;font-size:14px;font-weight:500;
+    transition:transform .4s var(--ease), background .3s var(--ease);
+  }
+  .submit:hover{transform:translateY(-1px);background:#fff}
+  .submit .arrow{width:18px;height:18px;border-radius:50%;background:var(--accent);position:relative}
+  .submit .arrow::before{
+    content:"";position:absolute;top:50%;left:4px;right:4px;height:1px;background:#0B0D10;
+  }
+  .submit .arrow::after{
+    content:"";position:absolute;top:50%;right:4px;width:6px;height:6px;
+    border-top:1px solid #0B0D10;border-right:1px solid #0B0D10;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .form-note{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:380px}
+
+  /* Footer */
+  .foot{
+    border-top:1px solid var(--rule);
+    max-width:1200px;margin:0 auto;padding:28px 32px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;
+    color:var(--fg-3);text-transform:uppercase;
+  }
+  .foot-links{display:flex;gap:22px}
+  .foot-links a:hover{color:var(--fg-2)}
+
+  /* ---------- Scene progress rail ---------- */
+  .rail{
+    position:fixed;right:28px;top:50%;transform:translateY(-50%);
+    z-index:30;display:flex;flex-direction:column;gap:10px;
+    pointer-events:none;
+  }
+  .rail .tick{
+    width:14px;height:1px;background:var(--fg-3);opacity:.5;
+    transition:all .5s var(--ease);
+  }
+  .rail .tick.is-active{background:var(--fg);width:22px;opacity:1}
+  .rail .tick.is-passed{background:var(--fg-2);opacity:.7}
+
+  .scroll-hint{
+    position:fixed;left:50%;bottom:32px;transform:translateX(-50%);
+    z-index:30;font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:0.14em;color:var(--fg-3);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+    transition:opacity .6s var(--ease);
+  }
+  .scroll-hint .line{
+    width:28px;height:1px;background:var(--fg-3);position:relative;overflow:hidden;
+  }
+  .scroll-hint .line::after{
+    content:"";position:absolute;inset:0;background:var(--fg);
+    transform-origin:left;animation: slide 2.4s var(--ease-io) infinite;
+  }
+  @keyframes slide{
+    0%{transform:translateX(-100%)}
+    50%{transform:translateX(0)}
+    100%{transform:translateX(100%)}
+  }
+
+  /* ---------- Tweaks panel ---------- */
+  .tweaks{
+    position:fixed;right:20px;bottom:20px;z-index:100;
+    width:280px;background:rgba(14,17,21,.92);
+    border:1px solid var(--rule);border-radius:10px;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    padding:16px;display:none;
+    font-size:12px;color:var(--fg);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  .tweaks.is-on{display:block}
+  .tweaks h4{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    color:var(--fg-3);text-transform:uppercase;margin-bottom:14px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .tweaks h4 span{color:var(--accent)}
+  .tweak-row{margin-bottom:14px}
+  .tweak-row:last-child{margin-bottom:0}
+  .tweak-row > label{
+    display:block;font-size:11px;color:var(--fg-2);margin-bottom:6px;letter-spacing:-0.005em;
+  }
+  .seg{
+    display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+  }
+  .seg button{
+    flex:1;padding:7px 6px;font-size:11px;color:var(--fg-2);
+    background:transparent;transition:all .3s var(--ease);letter-spacing:-0.005em;
+  }
+  .seg button:hover{color:var(--fg)}
+  .seg button.is-on{background:var(--fg);color:#0B0D10}
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .scene{transition:none}
+    *{animation:none !important}
+  }
+
+  /* Mobile */
+  @media (max-width: 820px){
+    .cards{grid-template-columns:1fr;gap:10px}
+    .cards .card:nth-child(3){display:none}
+    .trust,.access{grid-template-columns:1fr;gap:40px;padding:80px 24px}
+    .stats{grid-template-columns:1fr 1fr}
+    .notes{grid-template-columns:1fr}
+    .rail{display:none}
+    .foot{flex-direction:column;gap:14px;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="bar">
+  <a href="#" class="mark"><span class="dot"></span>Semperr</a>
+  <span class="status"><span class="pulse"></span>System nominal · UTC 14:08</span>
+</header>
+
+<!-- Progress rail -->
+<nav class="rail" aria-hidden="true">
+  <span class="tick" data-i="0"></span>
+  <span class="tick" data-i="1"></span>
+  <span class="tick" data-i="2"></span>
+  <span class="tick" data-i="3"></span>
+  <span class="tick" data-i="4"></span>
+</nav>
+
+<!-- Scroll-driven pinned section -->
+<section class="track" id="track">
+  <div class="stage">
+    <canvas id="field"></canvas>
+
+    <div class="scenes" id="scenes">
+      <!-- Scene 0: Hero -->
+      <div class="scene is-active" data-scene="0">
+        <div class="inner" style="text-align:left">
+          <div class="eyebrow">Proprietary Signal · Private Markets</div>
+          <h1 class="h1" data-tone-a="Signal exists.<br/><em>We make it visible.</em>"
+                         data-tone-b="The market whispers.<br/><em>We hear structure.</em>"
+                         data-tone-c="Most of the market is unpriced.<br/><em>That&rsquo;s where we start.</em>">
+            Signal exists.<br/><em>We make it visible.</em>
+          </h1>
+          <p class="sub" data-tone-a="Private market opportunities, continuously surfaced from fragmented, off-market data."
+                         data-tone-b="A quiet system for reading private markets &mdash; always on, always listening."
+                         data-tone-c="Continuously scanning 2.4M private companies to surface opportunities before they&rsquo;re priced.">
+            Private market opportunities, continuously surfaced from fragmented, off&#8209;market data.
+          </p>
+          <div class="cta-row">
+            <a class="cta" href="#access">Access the Signal <span class="arrow"></span></a>
+            <a class="cta-ghost" href="#trust">How it works</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 1: Recognition -->
+      <div class="scene" data-scene="1">
+        <div class="inner" style="text-align:left">
+          <div class="eyebrow">01 · Recognition</div>
+          <p class="caption">Most data is <span class="accent">noise</span>.</p>
+        </div>
+      </div>
+
+      <!-- Scene 2: Selection -->
+      <div class="scene" data-scene="2">
+        <div class="inner" style="text-align:left">
+          <div class="eyebrow">02 · Selection</div>
+          <p class="caption">Signal is <span class="accent">rare</span>, and rarely where you&rsquo;re looking.</p>
+        </div>
+      </div>
+
+      <!-- Scene 3: Form -->
+      <div class="scene scene-form" data-scene="3">
+        <div class="inner">
+          <div class="eyebrow" style="margin-bottom:36px">03 · Form &mdash; Three surfaced this morning</div>
+          <div class="cards">
+            <article class="card">
+              <span class="card-tag">EU · DE</span>
+              <div class="card-head">
+                <span class="card-id">SMP&nbsp;/&nbsp;24&#8209;0417</span>
+                <span class="card-score" data-signal-slot="0">0.94 <span class="signal-slot"></span></span>
+              </div>
+              <div class="card-name">Northwind Präzision</div>
+              <div class="card-sector">Aerospace precision components</div>
+              <div class="card-meta">
+                <div><div class="meta-k">Revenue</div><div class="meta-v">€38–46M</div></div>
+                <div><div class="meta-k">EBITDA</div><div class="meta-v">~22%</div></div>
+                <div><div class="meta-k">Headcount</div><div class="meta-v">184</div></div>
+                <div><div class="meta-k">Founded</div><div class="meta-v">1987</div></div>
+              </div>
+            </article>
+            <article class="card">
+              <span class="card-tag">NA · US</span>
+              <div class="card-head">
+                <span class="card-id">SMP&nbsp;/&nbsp;24&#8209;0412</span>
+                <span class="card-score" data-signal-slot="1">0.89 <span class="signal-slot"></span></span>
+              </div>
+              <div class="card-name">Arbor Clinical</div>
+              <div class="card-sector">Multi-site dermatology</div>
+              <div class="card-meta">
+                <div><div class="meta-k">Revenue</div><div class="meta-v">$52M</div></div>
+                <div><div class="meta-k">Sites</div><div class="meta-v">14</div></div>
+                <div><div class="meta-k">Growth (3y)</div><div class="meta-v">17% CAGR</div></div>
+                <div><div class="meta-k">Ownership</div><div class="meta-v">Founder-led</div></div>
+              </div>
+            </article>
+            <article class="card">
+              <span class="card-tag">NA · CA</span>
+              <div class="card-head">
+                <span class="card-id">SMP&nbsp;/&nbsp;24&#8209;0409</span>
+                <span class="card-score" data-signal-slot="2">0.86 <span class="signal-slot"></span></span>
+              </div>
+              <div class="card-name">Meridian Cold Chain</div>
+              <div class="card-sector">Cold-chain logistics</div>
+              <div class="card-meta">
+                <div><div class="meta-k">Revenue</div><div class="meta-v">C$71M</div></div>
+                <div><div class="meta-k">Fleet</div><div class="meta-v">112 units</div></div>
+                <div><div class="meta-k">Contracts</div><div class="meta-v">9 yr avg</div></div>
+                <div><div class="meta-k">Leverage</div><div class="meta-v">Low</div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4: Scale / stillness -->
+      <div class="scene" data-scene="4">
+        <div class="inner" style="text-align:left">
+          <div class="eyebrow">04 · Scale</div>
+          <p class="caption" data-tone-a="Continuously mapping the <span class=&quot;accent&quot;>fragmented middle</span> of private markets."
+                             data-tone-b="A continuous cartography of the <span class=&quot;accent&quot;>unlisted</span>."
+                             data-tone-c="<span class=&quot;accent&quot;>2.4M companies</span>. One live map.">
+            Continuously mapping the <span class="accent">fragmented middle</span> of private markets.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint">
+      <span>Scroll</span><span class="line"></span>
+    </div>
+  </div>
+</section>
+
+<!-- Trust section -->
+<section class="after" id="trust">
+  <div class="trust">
+    <div class="trust-lead">
+      Quiet infrastructure.<br/>
+      <em>Continuously validated datasets, sourced from public registries and licensed partners.</em>
+    </div>
+    <div class="trust-right">
+      <div class="stats">
+        <div>
+          <div class="stat-n"><span data-count="2400000">0</span></div>
+          <div class="stat-l">Private companies continuously tracked</div>
+        </div>
+        <div>
+          <div class="stat-n"><span data-count="147">0</span></div>
+          <div class="stat-l">Source feeds reconciled daily</div>
+        </div>
+        <div>
+          <div class="stat-n"><span data-count="24">0</span>/7</div>
+          <div class="stat-l">Signal pipeline uptime, <span style="color:var(--fg);font-variant-numeric:tabular-nums">99.98%</span></div>
+        </div>
+      </div>
+      <div class="notes">
+        <div class="note"><b>Validated</b>Every signal is cross-checked against at least three independent sources before surfacing.</div>
+        <div class="note"><b>Sourced</b>Public registries, regulatory filings, licensed commercial feeds. No scraping.</div>
+        <div class="note"><b>Updated</b>Continuous ingestion. Full graph reconciled every 24 hours, UTC.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Access / final CTA -->
+  <div class="access" id="access">
+    <h2>Access what the market<br/><em>hasn&rsquo;t priced.</em></h2>
+    <form class="form" id="accessForm" onsubmit="return onAccess(event)">
+      <div class="field">
+        <label for="ef-name">Name</label>
+        <input id="ef-name" type="text" placeholder="Jane Whitcombe" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="ef-email">Work email</label>
+        <input id="ef-email" type="email" placeholder="jane@firm.com" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="ef-firm">Firm</label>
+        <input id="ef-firm" type="text" placeholder="Meridian Capital Partners" required />
+      </div>
+      <div class="field">
+        <label for="ef-aum">AUM</label>
+        <select id="ef-aum" required>
+          <option value="" disabled selected>Select range</option>
+          <option>Under $250M</option>
+          <option>$250M – $1B</option>
+          <option>$1B – $5B</option>
+          <option>$5B+</option>
+        </select>
+      </div>
+      <button class="submit" type="submit">Request Access <span class="arrow"></span></button>
+      <p class="form-note">Access is granted to verified institutional investors. We&rsquo;ll respond within two business days.</p>
+    </form>
+  </div>
+
+  <div class="foot">
+    <span>Semperr Data, Inc. · MMXXVI</span>
+    <div class="foot-links">
+      <a href="/pe/methodology.html">Methodology</a>
+      <a href="/pe/sources.html">Sources</a>
+      <a href="/pe/contact.html">Contact</a>
+    </div>
+  </div>
+</section>
+
+<!-- Tweaks panel -->
+<aside class="tweaks" id="tweaks">
+  <h4>Tweaks <span>Semperr</span></h4>
+  <div class="tweak-row">
+    <label>Field metaphor</label>
+    <div class="seg" data-group="field">
+      <button data-val="lattice" class="is-on">Lattice</button>
+      <button data-val="constellation">Constellation</button>
+      <button data-val="globe">Globe</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Tone</label>
+    <div class="seg" data-group="tone">
+      <button data-val="a" class="is-on">Understated</button>
+      <button data-val="b">Poetic</button>
+      <button data-val="c">Direct</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Density</label>
+    <div class="seg" data-group="density">
+      <button data-val="low">Sparse</button>
+      <button data-val="med" class="is-on">Default</button>
+      <button data-val="high">Dense</button>
+    </div>
+  </div>
+</aside>
+
+<!-- Speaker-notes style defaults for Tweaks persistence -->
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "field": "globe",
+  "tone": "a",
+  "density": "high"
+}/*EDITMODE-END*/;
+</script>
+
+<script>
+/* Semperr — Field renderer */
+(function(){
+  const canvas = document.getElementById('field');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: true });
+  let W=0, H=0, DPR=1;
+  let nodes = [];
+  let links = [];
+  let selectedIdx = [];
+  let phase = 0;
+  let mode = 'lattice';
+  let density = 'med';
+  let startTime = performance.now();
+
+  window.Field = {
+    setPhase(p){ phase = Math.max(0, Math.min(1, p)); },
+    setMode(m){ if(m===mode) return; mode = m; build(); },
+    setDensity(d){ if(d===density) return; density = d; build(); }
+  };
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const r = canvas.getBoundingClientRect();
+    W = Math.floor(r.width); H = Math.floor(r.height);
+    canvas.width = Math.floor(W*DPR); canvas.height = Math.floor(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    build();
+  }
+  function densityCount(){
+    if(density==='low') return 260;
+    if(density==='high') return 720;
+    return 460;
+  }
+  function build(){
+    nodes = []; links = [];
+    if(mode==='lattice') buildLattice();
+    else if(mode==='constellation') buildConstellation();
+    else buildGlobe();
+    pickSelected();
+  }
+  function pickSelected(){
+    selectedIdx = [];
+    // Globe: use the three explicit signal nodes appended at the end of the array.
+    if(mode==='globe'){
+      for(let i=0;i<nodes.length;i++){
+        if(nodes[i].isExplicitSignal) selectedIdx.push(i);
+      }
+      return;
+    }
+    const targets = [-0.42, 0.00, 0.42];
+    for(const tx of targets){
+      let bestI=-1, bestD=Infinity;
+      for(let i=0;i<nodes.length;i++){
+        const n = nodes[i];
+        const d = (n.bx-tx)*(n.bx-tx) + (n.by-0)*(n.by-0);
+        if(d < bestD){ bestD = d; bestI = i; }
+      }
+      if(bestI>=0){ selectedIdx.push(bestI); nodes[bestI].isSignal = true; }
+    }
+  }
+  function buildLattice(){
+    const aspect = W/H;
+    const base = densityCount();
+    const cols = Math.round(Math.sqrt(base*aspect) * 1.15);
+    const rows = Math.round(cols/aspect);
+    const idx = (c,r)=> r*cols + c;
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const u = c/(cols-1);
+        const v = r/(rows-1);
+        const bx = (u*2-1)*1.15;
+        const by = (v*2-1)*1.15;
+        nodes.push({
+          bx, by, x:bx, y:by,
+          phaseSeed: Math.random()*Math.PI*2,
+          baseB: 0.22 + Math.random()*0.25,
+          sel:0, det:0, isSignal:false, mode:'lattice'
+        });
+      }
+    }
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        if(c<cols-1) links.push([idx(c,r), idx(c+1,r)]);
+        if(r<rows-1) links.push([idx(c,r), idx(c,r+1)]);
+      }
+    }
+  }
+  function buildConstellation(){
+    const n = densityCount();
+    for(let i=0;i<n;i++){
+      const a = Math.random()*Math.PI*2;
+      const r = Math.pow(Math.random(), 0.65) * 1.1;
+      nodes.push({
+        bx: Math.cos(a)*r*1.3,
+        by: Math.sin(a)*r*0.85,
+        x:0,y:0,
+        phaseSeed: Math.random()*Math.PI*2,
+        baseB: 0.15 + Math.random()*0.55,
+        sel:0, det:0, isSignal:false, mode:'constellation'
+      });
+    }
+  }
+  function buildGlobe(){
+    const n = densityCount();
+    const phi0 = Math.PI * (3 - Math.sqrt(5));
+    for(let i=0;i<n;i++){
+      const y = 1 - (i/(n-1))*2;
+      const radius = Math.sqrt(1 - y*y);
+      const theta = phi0 * i;
+      const x3 = Math.cos(theta)*radius;
+      const z3 = Math.sin(theta)*radius;
+      nodes.push({
+        x3, y3:y, z3, bx:0, by:0, x:0, y:0,
+        phaseSeed: Math.random()*Math.PI*2,
+        baseB: 0.2 + Math.random()*0.35,
+        sel:0, det:0, isSignal:false, mode:'globe'
+      });
+    }
+    // Three explicit signal nodes on the visible front face so all three
+    // are always projected and never picked from the hidden back hemisphere.
+    const signalPositions = [
+      { x3: -0.55, y3: 0.00, z3:  0.75 },
+      { x3:  0.00, y3: 0.05, z3:  0.95 },
+      { x3:  0.55, y3: 0.00, z3:  0.75 }
+    ];
+    for(const s of signalPositions){
+      nodes.push({
+        x3: s.x3, y3: s.y3, z3: s.z3, bx:0, by:0, x:0, y:0,
+        phaseSeed: Math.random()*Math.PI*2,
+        baseB: 0.35,
+        sel:0, det:0, isSignal:true, isExplicitSignal:true, mode:'globe'
+      });
+    }
+  }
+  function render(now){
+    const tSec = (now - startTime) / 1000;
+    requestAnimationFrame(render);
+    const p = phase;
+    const dim      = smooth(p, 0.08, 0.38);
+    const brighten = smooth(p, 0.22, 0.45);
+    const extract  = smooth(p, 0.38, 0.60);
+    const rebirth  = smooth(p, 0.92, 1.00);
+    const camShift = smooth(p, 0.20, 0.60) * 0.08;
+    const camZoom  = 1 + smooth(p, 0.00, 0.60)*0.08 - rebirth*0.05;
+    ctx.clearRect(0,0,W,H);
+    const grd = ctx.createRadialGradient(W*0.5, H*0.5, 0, W*0.5, H*0.5, Math.max(W,H)*0.65);
+    grd.addColorStop(0, 'rgba(18,22,28,0.6)');
+    grd.addColorStop(1, 'rgba(11,13,16,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,W,H);
+    const cx = W*0.5, cy = H*0.5;
+    const unit = Math.min(W, H) * 0.58 * camZoom;
+    const rotY = tSec * 0.06 + p*0.5;
+    const rotX = -0.25 + Math.sin(tSec*0.05)*0.02;
+    // Target the real DOM slots inside each deal card so the signal dots
+    // become part of the card UI, not just abstract positions.
+    const stageRect = canvas.getBoundingClientRect();
+    // Target the inner .signal-slot span specifically (not the whole score pill).
+    const slots = document.querySelectorAll('.signal-slot');
+    const cardTargets = [];
+    for(let k=0;k<3;k++){
+      const el = slots[k];
+      if(el){
+        const r = el.getBoundingClientRect();
+        cardTargets.push({
+          x: r.left - stageRect.left + r.width/2,
+          y: r.top  - stageRect.top  + r.height/2
+        });
+      } else {
+        const fallbackGap = Math.min(W*0.30, 360);
+        cardTargets.push({ x: cx + (k-1)*fallbackGap, y: H*0.5 });
+      }
+    }
+    if(mode==='lattice' && dim < 0.95){
+      ctx.lineWidth = 1;
+      for(const [a,b] of links){
+        const na = nodes[a], nb = nodes[b];
+        const pa = projectNode(na, tSec, rotX, rotY, cx, cy, unit, camShift);
+        const pb = projectNode(nb, tSec, rotX, rotY, cx, cy, unit, camShift);
+        if((na.isSignal || nb.isSignal) && extract>0.1) continue;
+        const alpha = 0.055 * (1 - dim*0.75) * (1 - rebirth*0.15 + rebirth*0.25);
+        ctx.strokeStyle = `rgba(180,195,220,${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(pa.x, pa.y);
+        ctx.lineTo(pb.x, pb.y);
+        ctx.stroke();
+      }
+    }
+    const pathVis = Math.max(0, brighten - extract*1.1);
+    if(pathVis > 0.01 && selectedIdx.length>=2){
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = `rgba(107,140,255,${0.35*pathVis})`;
+      ctx.shadowColor = 'rgba(107,140,255,0.5)';
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      for(let i=0;i<selectedIdx.length;i++){
+        const n = nodes[selectedIdx[i]];
+        const pp = projectNode(n, tSec, rotX, rotY, cx, cy, unit, camShift);
+        if(i===0) ctx.moveTo(pp.x, pp.y); else ctx.lineTo(pp.x, pp.y);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    for(let i=0;i<nodes.length;i++){
+      const n = nodes[i];
+      const proj = projectNode(n, tSec, rotX, rotY, cx, cy, unit, camShift);
+      let px = proj.x, py = proj.y, depth = proj.depth;
+      const isSig = n.isSignal;
+      let sigFadeOut = 0;
+      if(isSig){
+        const k = selectedIdx.indexOf(i);
+        if(k>=0 && extract>0){
+          // Pull toward card slot during extract; stay pinned while the Form
+          // scene owns the viewport. Once rebirth begins (scene 4 / Scale),
+          // signals fade out in place so the cards visually "scroll away".
+          const tx = cardTargets[k].x;
+          const ty = cardTargets[k].y;
+          px = lerp(px, tx, extract);
+          py = lerp(py, ty, extract);
+          sigFadeOut = rebirth; // 0..1 during scene 4
+          if(mode==='globe' && extract>0.15) depth = 1;
+        }
+      }
+      let b = n.baseB;
+      if(isSig) b = b * (1 - brighten*0.2) + brighten*0.95;
+      else { b = b * (1 - dim*0.75); b = b + rebirth*0.18*n.baseB; }
+      if(!isSig) b *= (1 - extract*0.55);
+      // Signal dots fade out during rebirth/Scale scene
+      if(isSig) b *= (1 - sigFadeOut);
+      let rad = 1.1 + (isSig ? brighten*1.6 : 0);
+      if(isSig && extract>0) rad += extract*1.4;
+      // Boost signal dots so they clearly read as 3 distinct dots on the cards
+      if(isSig && extract>0.5) rad = Math.max(rad, 3.2);
+      if(mode!=='lattice'){
+        if(isSig && extract>0.15){
+          // Don't dim committed signals by globe depth.
+        } else {
+          rad *= (0.8 + depth*0.6);
+          b *= (0.6 + depth*0.55);
+        }
+      }
+      if(b <= 0.005) continue;
+      if(isSig){
+        const haloA = 0.22 * brighten;
+        if(haloA > 0.01){
+          const g = ctx.createRadialGradient(px,py,0,px,py,rad*6);
+          g.addColorStop(0, `rgba(107,140,255,${haloA})`);
+          g.addColorStop(1, 'rgba(107,140,255,0)');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(px, py, rad*6, 0, Math.PI*2);
+          ctx.fill();
+        }
+        ctx.fillStyle = `rgba(220,230,255,${Math.min(1,b)})`;
+      } else {
+        ctx.fillStyle = `rgba(200,210,225,${Math.min(1,b)})`;
+      }
+      ctx.beginPath();
+      ctx.arc(px, py, rad, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+  function projectNode(n, tSec, rotX, rotY, cx, cy, unit, camShift){
+    if(n.mode==='globe'){
+      let x = n.x3, y = n.y3, z = n.z3;
+      const cy1 = Math.cos(rotY), sy1 = Math.sin(rotY);
+      let x2 = x*cy1 + z*sy1;
+      let z2 = -x*sy1 + z*cy1;
+      const cx1 = Math.cos(rotX), sx1 = Math.sin(rotX);
+      let y2 = y*cx1 - z2*sx1;
+      let z3 = y*sx1 + z2*cx1;
+      const persp = 1 / (2.2 - z3*0.6);
+      const px = cx + x2 * unit * persp;
+      const py = cy + y2 * unit * persp;
+      const depth = (z3 + 1) / 2;
+      return { x: px + camShift*unit*0.3, y: py, depth };
+    }
+    const drift =
+      Math.sin(tSec*0.25 + n.phaseSeed) * 0.006 +
+      Math.cos(tSec*0.18 + n.phaseSeed*1.3) * 0.004;
+    const wx = n.bx + drift;
+    const wy = n.by + drift*0.7 + Math.sin(tSec*0.15 + n.phaseSeed*0.7)*0.004;
+    let curve = 0;
+    if(n.mode==='lattice') curve = -0.08 * (wx*wx) - 0.05 * (wy*wy);
+    const px = cx + wx * unit + camShift*unit;
+    const py = cy + (wy + curve) * unit;
+    return { x: px, y: py, depth: 0.7 };
+  }
+  function smooth(t, a, b){
+    if(t<=a) return 0; if(t>=b) return 1;
+    const x = (t-a)/(b-a);
+    return x*x*(3-2*x);
+  }
+  function lerp(a,b,t){ return a + (b-a)*t; }
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(render);
+})();
+</script>
+
+<script>
+/* Semperr — scene engine + tweaks + access form */
+(function(){
+  const scenesEl = document.getElementById('scenes');
+  const sceneNodes = [...scenesEl.querySelectorAll('.scene')];
+  const track = document.getElementById('track');
+  const ticks = [...document.querySelectorAll('.rail .tick')];
+  const hint = document.getElementById('scrollHint');
+  const pins = [0, 0.12, 0.26, 0.42, 0.90];
+  let lastActive = 0;
+
+  function updateSceneFromScroll(){
+    const trackTop = track.offsetTop;
+    const trackH = track.offsetHeight;
+    const vh = window.innerHeight;
+    const scrollable = trackH - vh;
+    const y = Math.max(0, Math.min(scrollable, window.scrollY - trackTop));
+    const p = scrollable>0 ? y/scrollable : 0;
+    if(window.Field) window.Field.setPhase(p);
+    let active = 0;
+    for(let i=0;i<pins.length;i++){ if(p >= pins[i] - 0.01) active = i; }
+    if(active !== lastActive){
+      sceneNodes.forEach((el,i)=> el.classList.toggle('is-active', i===active));
+      ticks.forEach((el,i)=>{
+        el.classList.toggle('is-active', i===active);
+        el.classList.toggle('is-passed', i<active);
+      });
+      lastActive = active;
+    }
+    if(hint) hint.style.opacity = p>0.02 ? '0' : '1';
+  }
+  let ticking = false;
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){
+      requestAnimationFrame(()=>{ updateSceneFromScroll(); ticking=false; });
+      ticking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', updateSceneFromScroll);
+  updateSceneFromScroll();
+
+  const counters = [...document.querySelectorAll('[data-count]')];
+  let countersRan = false;
+  function formatStat(n, target){
+    if(target >= 1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'')+'M';
+    if(target >= 1000) return Math.round(n/100)/10 + 'K';
+    return Math.round(n).toString();
+  }
+  function runCounters(){
+    if(countersRan) return;
+    const rect = counters[0]?.getBoundingClientRect();
+    if(!rect) return;
+    if(rect.top < window.innerHeight*0.9){
+      countersRan = true;
+      counters.forEach(el=>{
+        const target = +el.dataset.count;
+        const dur = 1600;
+        const t0 = performance.now();
+        function step(now){
+          const t = Math.min(1, (now-t0)/dur);
+          const eased = 1 - Math.pow(1-t, 3);
+          el.textContent = formatStat(target*eased, target);
+          if(t<1) requestAnimationFrame(step);
+          else el.textContent = formatStat(target, target);
+        }
+        requestAnimationFrame(step);
+      });
+    }
+  }
+  window.addEventListener('scroll', runCounters, { passive:true });
+  runCounters();
+
+  window.onAccess = function(e){
+    e.preventDefault();
+    const form = document.getElementById('accessForm');
+    const btn = form.querySelector('.submit');
+    btn.style.pointerEvents = 'none';
+    btn.innerHTML = 'Submitting <span class="arrow"></span>';
+    setTimeout(()=>{
+      form.innerHTML =
+        '<div style="font-size:22px;letter-spacing:-0.02em;line-height:1.2;color:var(--fg);max-width:420px">Received.</div>' +
+        '<p class="form-note" style="margin-top:12px">A member of our team will be in touch within two business days. Thank you.</p>';
+    }, 600);
+    return false;
+  };
+
+  const tweaksEl = document.getElementById('tweaks');
+  function setTweak(group, val){
+    document.querySelectorAll(`.seg[data-group="${group}"] button`).forEach(b=>{
+      b.classList.toggle('is-on', b.dataset.val === val);
+    });
+    if(group==='field' && window.Field) window.Field.setMode(val);
+    if(group==='density' && window.Field) window.Field.setDensity(val);
+    if(group==='tone') applyTone(val);
+    try { window.parent.postMessage({ type:'__edit_mode_set_keys', edits: { [group]: val } }, '*'); } catch(_){}
+  }
+  function applyTone(v){
+    document.querySelectorAll(`[data-tone-${v}]`).forEach(el=>{
+      el.innerHTML = el.getAttribute(`data-tone-${v}`);
+    });
+  }
+  document.querySelectorAll('.tweaks .seg').forEach(seg=>{
+    const group = seg.dataset.group;
+    seg.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=> setTweak(group, btn.dataset.val));
+    });
+  });
+  window.addEventListener('message', (e)=>{
+    const d = e.data || {};
+    if(d.type === '__activate_edit_mode'){ tweaksEl.classList.add('is-on'); }
+    else if(d.type === '__deactivate_edit_mode'){ tweaksEl.classList.remove('is-on'); }
+  });
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(_){}
+
+  try{
+    if(typeof TWEAK_DEFAULTS === 'object'){
+      if(TWEAK_DEFAULTS.field && window.Field) window.Field.setMode(TWEAK_DEFAULTS.field);
+      if(TWEAK_DEFAULTS.density && window.Field) window.Field.setDensity(TWEAK_DEFAULTS.density);
+      if(TWEAK_DEFAULTS.tone) applyTone(TWEAK_DEFAULTS.tone);
+      Object.entries(TWEAK_DEFAULTS).forEach(([k,v])=>{
+        document.querySelectorAll(`.seg[data-group="${k}"] button`).forEach(b=>{
+          b.classList.toggle('is-on', b.dataset.val === v);
+        });
+      });
+    }
+  }catch(_){}
+
+  document.querySelectorAll('a[href="#access"], a[href="#trust"]').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if(!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
