@@ -54,6 +54,22 @@
     font-weight:400;color:var(--fg-3);font-size:13px;
     margin-left:2px;
   }
+  .mark .brand{
+    position:relative;
+  }
+  .mark .brand::after{
+    content:"";position:absolute;
+    inset:-4px -8px;border-radius:4px;
+    border:1px solid var(--accent);
+    opacity:0;
+    animation:brandPulse 1.8s var(--ease-io) 0.5s forwards;
+  }
+  @keyframes brandPulse{
+    0%{opacity:0;transform:scale(0.95)}
+    20%{opacity:0.8;transform:scale(1)}
+    50%{opacity:0.4;transform:scale(1.02)}
+    100%{opacity:0;transform:scale(1.05)}
+  }
   .login{
     pointer-events:auto;
     font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;
@@ -428,7 +444,7 @@
 
 <!-- Top bar -->
 <header class="bar">
-  <a href="/trace/" class="mark"><span class="dot"></span>Trace <span class="by">by Semperr</span></a>
+  <a href="/trace/" class="mark"><span class="dot"></span><span class="brand">Trace</span> <span class="by">by Semperr</span></a>
   <a href="/trace/login.html" class="login">Access Trace</a>
 </header>
 
