@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Client Login — Semperr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg: #0B0D10;
+    --bg-2: #0E1115;
+    --fg: #E8EAEE;
+    --fg-2: #9AA0AA;
+    --fg-3: #5C626C;
+    --rule: #1A1E24;
+    --accent: #6B8CFF;
+    --accent-dim: rgba(107,140,255,0.32);
+    --error: #FF6B6B;
+    --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:var(--bg);color:var(--fg);
+    font-family:var(--font-sans);font-weight:400;
+    -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+    min-height:100vh;
+  }
+
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* Layout */
+  .page{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  /* Left panel */
+  .left{
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    padding:48px;
+    position:relative;
+  }
+
+  .mark{
+    position:absolute;top:28px;left:28px;
+    font-weight:500;letter-spacing:-0.01em;font-size:15px;
+    display:inline-flex;align-items:center;gap:10px;color:var(--fg);
+  }
+  .mark .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 12px var(--accent-dim);
+  }
+
+  .login-box{
+    width:100%;max-width:360px;
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;
+    color:var(--fg-3);text-transform:uppercase;margin-bottom:20px;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:"";width:18px;height:1px;background:var(--fg-3);
+  }
+
+  h1{
+    font-weight:300;letter-spacing:-0.03em;
+    font-size:36px;line-height:1.1;color:var(--fg);
+    margin-bottom:12px;
+  }
+
+  .subtitle{
+    font-size:15px;color:var(--fg-2);line-height:1.5;
+    margin-bottom:40px;
+  }
+
+  .form{
+    display:flex;flex-direction:column;gap:24px;
+  }
+
+  .field{
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .field label{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.12em;
+    color:var(--fg-3);text-transform:uppercase;
+  }
+  .field input{
+    font:inherit;color:var(--fg);background:transparent;
+    border:0;border-bottom:1px solid var(--rule);
+    padding:12px 0;font-size:15px;letter-spacing:-0.005em;
+    outline:none;transition:border-color .2s ease;
+    border-radius:0;
+  }
+  .field input:focus{border-bottom-color:var(--accent)}
+  .field input::placeholder{color:var(--fg-3)}
+
+  .field-row{
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .remember{
+    display:flex;align-items:center;gap:10px;
+    font-size:13px;color:var(--fg-2);cursor:pointer;
+  }
+  .remember input{
+    width:16px;height:16px;accent-color:var(--accent);
+    cursor:pointer;
+  }
+  .forgot{
+    font-size:13px;color:var(--fg-3);
+    transition:color .2s ease;
+  }
+  .forgot:hover{color:var(--fg)}
+
+  .submit{
+    width:100%;
+    display:inline-flex;align-items:center;justify-content:center;gap:14px;
+    padding:16px 24px;border-radius:999px;
+    background:var(--fg);color:#0B0D10;font-size:14px;font-weight:500;
+    transition:transform .2s ease, background .2s ease;
+    margin-top:8px;
+  }
+  .submit:hover{transform:translateY(-1px);background:#fff}
+  .submit .arrow{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--accent);position:relative;
+  }
+  .submit .arrow::before{
+    content:"";position:absolute;top:50%;left:5px;right:5px;height:1px;background:#0B0D10;
+  }
+  .submit .arrow::after{
+    content:"";position:absolute;top:50%;right:5px;width:5px;height:5px;
+    border-top:1px solid #0B0D10;border-right:1px solid #0B0D10;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .divider{
+    display:flex;align-items:center;gap:16px;
+    margin:32px 0;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--rule);
+  }
+  .divider span{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+    color:var(--fg-3);text-transform:uppercase;
+  }
+
+  .access-link{
+    text-align:center;
+    font-size:14px;color:var(--fg-2);
+  }
+  .access-link a{
+    color:var(--accent);transition:opacity .2s ease;
+  }
+  .access-link a:hover{opacity:0.7}
+
+  /* Right panel */
+  .right{
+    background:var(--bg-2);
+    border-left:1px solid var(--rule);
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    padding:48px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .right::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(107,140,255,0.08), transparent 70%);
+    pointer-events:none;
+  }
+
+  .stats{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;gap:48px;
+    max-width:320px;
+  }
+
+  .stat{
+    text-align:center;
+  }
+  .stat-n{
+    font-size:48px;letter-spacing:-0.03em;font-weight:300;
+    color:var(--fg);font-variant-numeric:tabular-nums;
+    margin-bottom:8px;
+  }
+  .stat-n span{color:var(--accent)}
+  .stat-l{
+    font-size:14px;color:var(--fg-2);line-height:1.5;
+  }
+
+  .quote{
+    position:relative;z-index:1;
+    max-width:360px;
+    margin-top:64px;
+    padding-top:32px;
+    border-top:1px solid var(--rule);
+  }
+  .quote p{
+    font-size:15px;font-style:italic;color:var(--fg-2);
+    line-height:1.6;margin-bottom:16px;
+  }
+  .quote cite{
+    font-style:normal;font-size:13px;color:var(--fg-3);
+    display:block;
+  }
+  .quote cite strong{
+    color:var(--fg);font-weight:500;
+  }
+
+  /* Footer */
+  .foot{
+    position:absolute;bottom:28px;left:28px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;
+    color:var(--fg-3);text-transform:uppercase;
+  }
+
+  /* Mobile */
+  @media (max-width: 900px){
+    .page{grid-template-columns:1fr}
+    .right{display:none}
+    .left{padding:32px 24px;min-height:100vh}
+    .mark{top:24px;left:24px}
+    .foot{bottom:24px;left:24px}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="left">
+    <a href="/pe/" class="mark"><span class="dot"></span>Semperr</a>
+
+    <div class="login-box">
+      <div class="eyebrow">Client Portal</div>
+      <h1>Sign in</h1>
+      <p class="subtitle">Access your dashboard and signal feed.</p>
+
+      <form class="form" id="loginForm" onsubmit="return onLogin(event)">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@firm.com" autocomplete="email" required />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+        </div>
+
+        <div class="field-row">
+          <label class="remember">
+            <input type="checkbox" name="remember" />
+            Remember me
+          </label>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+
+        <button class="submit" type="submit">Sign in <span class="arrow"></span></button>
+      </form>
+
+      <div class="divider"><span>or</span></div>
+
+      <p class="access-link">
+        Don't have access? <a href="/pe/contact.html">Request access</a>
+      </p>
+    </div>
+
+    <div class="foot">Semperr Data, Inc.</div>
+  </div>
+
+  <div class="right">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-n">2.4<span>M</span></div>
+        <div class="stat-l">Private companies tracked</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">147</div>
+        <div class="stat-l">Data feeds reconciled daily</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">24<span>/7</span></div>
+        <div class="stat-l">Signal pipeline uptime</div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <p>"The signal quality is unlike anything else we've seen in the market. It's become core to our origination process."</p>
+      <cite><strong>Managing Director</strong><br/>Mid-Market PE Fund</cite>
+    </div>
+  </div>
+</div>
+
+<script>
+function onLogin(e) {
+  e.preventDefault();
+  const btn = document.querySelector('.submit');
+  btn.style.pointerEvents = 'none';
+  btn.innerHTML = 'Signing in <span class="arrow"></span>';
+
+  setTimeout(() => {
+    // Redirect to dashboard or show error
+    // For now, just show a message
+    const form = document.getElementById('loginForm');
+    form.innerHTML =
+      '<div style="text-align:center;padding:20px 0">' +
+      '<div style="font-size:18px;color:var(--fg);margin-bottom:8px">Authentication required</div>' +
+      '<p style="font-size:14px;color:var(--fg-2)">Client portal access is granted upon approval.<br/>Contact your account manager for credentials.</p>' +
+      '</div>';
+  }, 800);
+
+  return false;
+}
+</script>
+
+</body>
+</html>
