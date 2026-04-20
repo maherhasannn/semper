@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sources — Semperr</title>
+<title>Sources — Trace by Semperr</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
@@ -43,6 +43,10 @@
     width:7px;height:7px;border-radius:50%;
     background:var(--accent);
     box-shadow:0 0 12px var(--accent-dim);
+  }
+  .mark .by{
+    font-weight:400;color:var(--fg-3);font-size:13px;
+    margin-left:2px;
   }
   .nav{display:flex;gap:24px}
   .nav a{
@@ -187,7 +191,7 @@
 <body>
 
 <header class="bar">
-  <a href="/pe/" class="mark"><span class="dot"></span>Semperr</a>
+  <a href="/pe/" class="mark"><span class="dot"></span>Trace <span class="by">by Semperr</span></a>
   <nav class="nav">
     <a href="/pe/methodology.html">Methodology</a>
     <a href="/pe/sources.html" class="is-active">Sources</a>
